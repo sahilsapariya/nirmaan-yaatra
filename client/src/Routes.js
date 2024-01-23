@@ -7,7 +7,7 @@ const ProjectRoutes = () => {
 return (
 <Router>
     <Routes>
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="sign-up" element={<SignUp />} />
         <Route path="sign-in" element={<SignIn />} />
     </Routes>
 </Router>
