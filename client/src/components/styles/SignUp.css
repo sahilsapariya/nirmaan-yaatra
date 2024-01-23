@@ -32,6 +32,13 @@
     margin-right: 150px;
 }
 
+.logo_header {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.03rem;
+    font-size: 20px;
+}
+
 .signup__building_input_form {
     font-size: 1.03rem;
     display: flex;
