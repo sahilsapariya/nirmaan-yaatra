@@ -1,10 +1,12 @@
 import React from 'react'
-import '../styles/Home.scss'
+import Navbar from '../common/Navbar'
 
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <Navbar />
+    </>
   )
 }
 
