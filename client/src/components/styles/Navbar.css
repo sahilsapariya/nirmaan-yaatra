@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Kanit;
+}
+
+.navbar__Heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    background-color: #142C40;
+    color: white;
+    height: 3.9375rem;
+}
+
+.navbar__logo_Name {
+    display: flex;
+    align-content: center;
+    color: var(--White, #FFF);
+    text-align: center;
+    font-size: 2rem;
+    font-style: normal;
+    letter-spacing: 0.005rem;
+    margin: auto 0;
+    margin-left: 0.5rem;
+
+}
+
+.navbar__navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar__button {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    color: #000;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    margin-right: 0.5rem;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.navbar__add_site_button {
+    background-color: #fff;
+    border: 0px;
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button_text {
+    margin-top: 0.08rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+}
+
+.navbar__profile_button {
+    display: flex;
+    margin-right: 0.5rem;
+    background-color: #142C40;
+    color: #FFF;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+    border: 0px;
+    font-size: 50px;
+}
