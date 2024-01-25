@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "../styles/SignUp.css"
-import buldingImage from '../../images/img_construction.png'
-
-const options = [
-    { label: "Admin", value: "admin" },
-    { label: "Contractor", value: "contractor" },
-];
-
+import buldingImage from '../../assets/images/img_construction.png'
 
 function SignIn() {
     const navigate = useNavigate();
@@ -52,7 +46,7 @@ function SignIn() {
             <div className="signup__container">
                 <div className='signup__inner_container'>
                     <div className='signup__building_image'>
-                        <img src={buldingImage} alt='Background Image' />
+                        <img src={buldingImage} alt='Background' />
                     </div>
                     <div className='signup__building_input_form'>
                         <h1 className="signup__container_heading">Sign In</h1>
