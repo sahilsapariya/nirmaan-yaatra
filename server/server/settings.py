@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "projects"
 ]
 
+AUTH_USER_MODEL = "users.Contractor"
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
