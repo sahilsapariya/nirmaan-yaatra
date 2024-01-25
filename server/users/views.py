@@ -9,6 +9,17 @@ class ContractorRegistrationView(generics.ListCreateAPIView):
     serializer_class = ContractorSerializer
     permission_classes = [IsAdminOrContractor]
 
+    def perform_create(self, serializer):
+        # Set password for the contractor
+        validated_data = serializer.validated_data
+        password = validated_data.get('password')
+        if password:
+            contractor = serializer.save()
+            contractor.set_password(password)  # Hash the password
+            contractor.save()
+        else:
+            serializer.save()
+
     def get_queryset(self):
         return Contractor.objects.filter(is_superuser=False)
 
