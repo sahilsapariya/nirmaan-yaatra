@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { authTokens } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async (url) => {
@@ -12,7 +14,7 @@ const useFetch = (url) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${String(authTokens.access)}`,
           },
         });
 
@@ -30,7 +32,6 @@ const useFetch = (url) => {
     };
     fetchData(url);
   }, [url]);
-
 
   return { data, loading, error };
 };

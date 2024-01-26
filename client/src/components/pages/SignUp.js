@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../styles/SignUp.css";
 import buldingImage from "../../assets/images/img_construction.png";
-import { options } from "../../data/Data";
 
 const SignUp = () => {
-  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-    role: "",
   });
 
   const handleChange = (e) => {
@@ -23,24 +20,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch("/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        console.error("Done!");
-      } else {
-        console.log(formData);
-        console.error("API call failed");
-        navigate("/sign-in");
-      }
-    } catch (error) {
-      console.error("Error during API call", error);
-    }
+    
   };
 
   return (
@@ -85,20 +65,6 @@ const SignUp = () => {
                   placeholder="Password"
                   required
                 />
-                <select
-                  name="role"
-                  value={formData.role}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled>
-                    Role
-                  </option>
-                  {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
                 <button className="button_property" type="submit">
                   Submit
                 </button>
@@ -109,5 +75,5 @@ const SignUp = () => {
       </div>
     </>
   );
-}
+};
 export default SignUp;

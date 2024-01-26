@@ -1,19 +1,40 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SignUp from './components/pages/SignUp';
-import SignIn from './components/pages/SignIn';
-import AdminHome from './components/pages/AdminHome';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignUp from "./components/pages/SignUp";
+import SignIn from "./components/pages/SignIn";
+import AdminHome from "./components/pages/AdminHome";
+
+import ProtectedRoute from "./context/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 const ProjectRoutes = () => {
-return (
-<Router>
-    <Routes>
-        <Route path="sign-up" element={<SignUp />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="admin-home" element={<AdminHome />} />
-    </Routes>
-</Router>
-)
-}
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route
+            path="/sign-up"
+            element={
+              <ProtectedRoute>
+                <SignUp />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="sign-in" element={<SignIn />} />
+          <Route
+            path="/admin-home"
+            element={
+              <ProtectedRoute>
+                <AdminHome />
+              </ProtectedRoute>
+            }
+          />
 
-export default ProjectRoutes
+          <Route path="/*" element={<SignIn />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+  );
+};
+
+export default ProjectRoutes;
