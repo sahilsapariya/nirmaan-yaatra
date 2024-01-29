@@ -1,10 +1,10 @@
-from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.response import Response
 from .models import Project
 from .serializers import ProjectSerializer
 from users.permissions import IsAdminOrContractor
-
+from django.http import HttpResponse
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
@@ -34,3 +34,4 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    

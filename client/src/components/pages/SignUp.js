@@ -3,7 +3,6 @@ import "../styles/SignUp.css";
 import buldingImage from "../../assets/images/img_construction.png";
 
 const SignUp = () => {
-  
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,7 +19,6 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
   };
 
   return (

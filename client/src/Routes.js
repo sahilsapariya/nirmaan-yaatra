@@ -20,7 +20,7 @@ const ProjectRoutes = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="sign-in" element={<SignIn />} />
+          <Route path="/sign-in" exact element={<SignIn />} />
           <Route
             path="/admin-home"
             element={
