@@ -3,7 +3,8 @@
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     .add_site_image_container{
         
         margin: 0 auto;
@@ -15,7 +16,7 @@
 
     .add_site_form_container{
         margin: 0 auto;
-        padding: 20px;
+        padding: 2rem;
         border-radius: 0.625rem;
         border: 2px solid var(--Rounded-Border-Outline, #FFE0E0);
         background: var(--White, #FFF);
@@ -29,15 +30,36 @@
         align-items: center;
         
         input{
-            margin-left: 0.5rem;
-            padding: 5px;
+            width: 13rem;
+            margin-left: 1rem;
+            padding: 8px;
             border-radius: 0.3125rem;
             border: 1px solid #000;
             background: var(--White, #FFF);
         }
 
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+        .add_site_select{
+            margin-left: 1rem;
+            width: 10rem;
+            padding: 5px;
+            border-radius: 0.3125rem;
+            border: 1px solid #000;
+            background: var(--White, #FFF);
+            color: #000;
+            
+            .Default_selector{
+                color: var(--grey-color, #888);                
+            }
+        }
+
+
     }
-    .add_site_button{
+    button{
         width: 100%;
         padding: 8px;
         margin-top: 1.5rem;
@@ -45,5 +67,20 @@
         border: 1px solid rgba(0, 0, 0, 0.50);
         background: var(--Blue-Color, #142C40);
         color:#FFF;
+        cursor: pointer;
+    }
+
+}
+
+@media screen and (max-width:454px) {
+    .add_site_container{   
+        margin: 0 auto;
+        margin-top: 1rem;
+        margin-left: -2.5rem;
+        .add_site_image_container{
+            img{
+                display: none;
+            }
+        }
     }
 }
