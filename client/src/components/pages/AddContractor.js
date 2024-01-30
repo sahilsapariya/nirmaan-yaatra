@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import Navbar from '../common/Navbar';
-import illustration from "../../assets/images/addsite_icon.png";
+import illustration from "../../assets/images/addcontractor_icon.png";
 import "../styles/AddSite.scss";
 import Form from '../common/Form';
 
 const AddSite = () => {
     const initialFormData = {
         name: { label_name: 'Name', value: '', type: 'text', pl: 'Name' },
-        clientName: { label_name: 'Client Name', value: '', type: 'text', pl: 'Client Name' },
-        budget: { label_name: 'Budget', value: '', type: 'number', pl: 'Budget' },
-        constructionType: { label_name: 'Construction Type', value: '', type: 'select', pl: 'Construction Type', options: ['Building', 'Tenament', 'Other'], optionDefault: 'Select' },
+        email: { label_name: 'Email', value: '', type: 'email', pl: 'abc@gmail.com' },
+        username: { label_name: 'Username', value: '', type: 'text', pl: 'Username' },
+        contactInfo: { label_name: 'Contact No.', value: '', type: 'number', pl: '+91-1234567890' },
         location: { label_name: 'Location', value: '', type: 'text', pl: 'Location' },
+        Password: { label_name: 'Password', value: '', type: 'password', pl: 'Enter Password' },
         description: { label_name: 'Description', value: '', type: 'text', pl: 'Description' },
-        image: { label_name: 'Image', value: '', type: 'url', pl: 'Image' }
+        image: { label_name: 'Image', value: '', type: 'url', pl: 'Image' },
     };
 
     const [formData, setFormData] = useState(initialFormData);
@@ -35,8 +36,8 @@ const AddSite = () => {
                 </div>
                 <Form
                     RedText="Add"
-                    NormalText="Site"
-                    button_label="Add Site"
+                    NormalText="Contractor"
+                    button_label="Add Contractor"
                     handleSubmit={handleSubmit}
                     formData={formData}
                     setFormData={setFormData}

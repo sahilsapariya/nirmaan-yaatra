@@ -66,9 +66,7 @@
   letter-spacing: 0.08px;
 }
 
-.signup__container_input_field,
-option,
-select {
+.signup__container_input_field {
   width: 80%;
   height: 30px;
   padding: 5px;
@@ -80,8 +78,7 @@ select {
   outline: none;
 }
 
-.signup__building_input_form option,
-select {
+.signup__building_input_form {
   width: 84%;
   height: 40px;
 }
