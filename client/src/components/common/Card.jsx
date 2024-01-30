@@ -9,7 +9,7 @@ const Card = ({ site }) => {
       </div>
 
       <div className="card__header">
-        <h3>{site.title}</h3>
+        <h3>{site.project_name}</h3>
       </div>
 
       <div className="card__description">

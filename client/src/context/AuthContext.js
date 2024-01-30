@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }) => {
 
     let data = await response.json();
 
-    console.log("from login user", data);
     if (data) {
       localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data);
@@ -52,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("authTokens");
     setAuthTokens(null);
     setUser(null);
-    navigate("/login");
+    navigate("/sign-in");
   };
 
   const updateToken = async () => {
@@ -86,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const REFRESH_INTERVAL = 1000 * 60 * 1; // 4 minutes
+    const REFRESH_INTERVAL = 1000 * 60 * 60; // 4 minutes
     let interval = setInterval(() => {
       if (authTokens) {
         updateToken();
