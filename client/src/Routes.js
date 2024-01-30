@@ -10,28 +10,6 @@ import ProtectedRoute from "./context/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 
 const ProjectRoutes = () => {
-<<<<<<< Updated upstream
-  return (
-    <Router>
-      <AuthProvider>
-        <Routes>
-          <Route
-            path="/sign-up"
-            element={
-              <ProtectedRoute>
-                <SignUp />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/sign-in" exact element={<SignIn />} />
-          <Route
-            path="/admin-home"
-            element={
-              <ProtectedRoute>
-                <AdminHome />
-              </ProtectedRoute>
-            }
-=======
 return (
 <Router>
   <AuthProvider>
@@ -46,7 +24,6 @@ return (
           <AdminHome />
           </ProtectedRoute>
           }
->>>>>>> Stashed changes
           />
 
           <Route path="/*" element={<SignIn />} />
