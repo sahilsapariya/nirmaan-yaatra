@@ -3,10 +3,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchProjects = createAsyncThunk("fetchProjects", async (url, { getState }) => {
   const { project } = getState();
 
-  // Check if data is already available in the store
   if (project.data) {
     console.log("returing store data");
-    return project.data; // Return existing data
+    return project.data;
   }
   console.log("make request");
   const response = await fetch(url, {

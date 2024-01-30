@@ -1,7 +1,11 @@
 import React from "react";
 import "../styles/Components.scss";
+import { useDispatch } from "react-redux";
+import { onTape } from "../../features/global/globalSlice";
 
 const Card = ({ site }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className="card__container">
       <div className="image__container">
@@ -17,7 +21,7 @@ const Card = ({ site }) => {
       </div>
 
       <div className="card__button">
-        <button>View Site</button>
+        <button onClick={() => dispatch(onTape())}>View Site</button>
       </div>
     </div>
   );

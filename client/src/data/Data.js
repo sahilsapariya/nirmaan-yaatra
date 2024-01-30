@@ -51,3 +51,24 @@ export const liveSiteData = [
     site_url: "",
   },
 ];
+
+
+export const contractor = {
+  "name": "Bhanu Prasad Yadav",
+  "specialization": "web developer",
+  "email": "bhanu.prasad@gmail.com",
+  "phone_number": "+91 12345-12345",
+  "description": "Description for example contractor for web developer",
+  "location": "Nadiad",
+  "username": "bhanu.prasad"
+}
+
+export const site = {
+  "name": "Dharmsinh Desai University",
+  "budget": "10 cores",
+  "description": "Description for example contractor for web developer",
+  "location": "Nadiad",
+  "client_name": "HM desai",
+  "city": "Nadiad, Gujarat",
+  "status": "in-progress"
+}

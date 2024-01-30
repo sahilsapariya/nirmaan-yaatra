@@ -1,0 +1,119 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .popup_close_icon {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+
+    background: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    padding: 5px;
+    border-radius: 50%;
+
+    img {
+      width: 2rem;
+      height: auto;
+      cursor: pointer;
+    }
+  }
+
+  .popup-inner {
+    position: relative;
+    padding: 1rem;
+    width: 100%;
+    margin: 0 10%;
+    max-width: 45rem;
+    max-height: 70vh;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow-y: scroll;
+
+    .card__heading {
+      color: #000;
+      text-align: left;
+      font-family: Kanit;
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 400;
+      letter-spacing: 0.00438rem;
+      border-bottom: solid 1px #000;
+    }
+
+    .card_information__container {
+      margin: 2rem;
+
+      .information__upper_container {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .card_image__container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            border: solid 1px;
+            border-radius: 5px;
+          }
+        }
+
+        .information_table {
+          h2 {
+            line-height: 1.5rem;
+          }
+          width: 50%;
+          table {
+            margin-top: 1rem;
+            width: 100%;
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    .information__lower_container {
+      margin-top: 1rem;
+
+      p {
+        text-align: justify;
+      }
+    }
+  }
+}
+
+#site-image {
+  width: 80%;
+}
+
+@media only screen and (max-width: 768px) {
+  #site-image {
+    width: 100%;
+  }
+  .popup-inner {
+    margin: 0 5% !important;
+    .card_information__container {
+      .information__upper_container {
+        flex-direction: column;
+
+        .information_table {
+          margin-top: 1rem;
+          width: 100% !important;
+        }
+      }
+    }
+  }
+}
