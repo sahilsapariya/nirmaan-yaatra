@@ -17,6 +17,13 @@ class Project(models.Model):
     status = models.CharField(max_length=20, choices=PROJECT_STATUS_CHOICES, default='pending')
     description = models.TextField(blank=True)
     img_url = models.URLField(blank=True)
+    location = models.CharField(max_length=100, blank=True, default=None)
+    city = models.CharField(max_length=100, blank=True)
+    client_name = models.CharField(max_length=255, blank=True, default=None)
+    client_number = models.CharField(max_length=255, blank=True, null=True, default=None)
+    client_address = models.CharField(max_length=255, null=True, blank=True, default=None)
+    client_city = models.CharField(max_length=255, blank=True, null=True, default=None)
+    client_email = models.EmailField(max_length=255, blank=True, null=True, default=None)
 
     
     def __str__(self) -> str:

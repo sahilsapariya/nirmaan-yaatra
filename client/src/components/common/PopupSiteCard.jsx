@@ -24,7 +24,7 @@ const PopupSiteCard = ({ site }) => {
               <img src={SiteImg} alt="site" id="site-image" />
             </div>
             <div className="information_table">
-              <h2>{site.title}</h2>
+              <h2>{site.project_name}</h2>
               <p>{site.city}</p>
 
               <table>

@@ -5,7 +5,7 @@ import Slider from "../common/Slider";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
-import { baseurl } from "../../config";
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     if (!projects) {
-      dispatch(fetchProjects(`${baseurl}/api/v1/projects/`));
+      dispatch(fetchProjects());
     }
   }, [dispatch, projects]);
 

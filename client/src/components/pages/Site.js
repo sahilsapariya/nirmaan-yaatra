@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../common/Navbar";
 import "../styles/Site.scss";
 import Slider from "../common/Slider";
-import dduImage from "../../assets/images/site.png";
 import PopupSiteCard from "../common/PopupSiteCard";
 import { onSiteTape } from "../../features/global/globalSlice";
-import "../styles/Popup.scss"
+import "../styles/Popup.scss";
+import { useParams } from "react-router-dom";
+import { fetchSite } from "../../features/site/siteSlice";
+import { baseurl } from "../../config";
 
 const Site = () => {
+  const dispatch = useDispatch();
   const state = useSelector((state) => state.site);
+  const { siteId } = useParams();
 
   let site = state.data;
+
+  useEffect(() => {
+    dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
+  }, [dispatch, siteId]);
 
   return (
     <>
@@ -22,7 +30,7 @@ const Site = () => {
           <ExpensePieChart />
         </div>
         <div className="lower__container">
-          <SiteDetails fields={site.siteDetails} />
+          <SiteDetails fields={site?.siteDetails} />
         </div>
 
         <PopupSiteCard site={site} />
@@ -37,7 +45,7 @@ const SiteCard = ({ data }) => {
   return (
     <div className="site_card__container">
       <div className="information__container">
-        <h2>{data?.title}</h2>
+        <h2>{data?.project_name}</h2>
 
         <table>
           <tr>
@@ -60,7 +68,7 @@ const SiteCard = ({ data }) => {
       </div>
 
       <div className="image__container">
-        <img src={dduImage} alt="ddu" />
+        <img src={data?.img_url} alt="ddu" />
       </div>
     </div>
   );

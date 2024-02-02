@@ -34,7 +34,7 @@ const ProjectRoutes = () => {
             }
           />
           <Route
-            path="/site/:siteName"
+            path="/site/:siteId"
             element={
               <ProtectedRoute>
                 <Site />
@@ -52,7 +52,7 @@ const ProjectRoutes = () => {
             }
           />
           <Route
-            path="/add-contractor"
+            path="/site/:siteId/add-contractor"
             excat
             element={
               <ProtectedRoute>

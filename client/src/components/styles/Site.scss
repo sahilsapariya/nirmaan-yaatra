@@ -7,7 +7,7 @@
 .site_card__container {
   display: flex;
   width: 60%;
-  padding: 0.5rem;
+  padding: 1rem;
   border: solid 1px;
   border-radius: 5px;
   margin: 1rem;
@@ -34,7 +34,7 @@
         justify-content: center;
 
         button {
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 2rem;
             background: #142c40;
             color: white;
             border: none;
@@ -55,6 +55,7 @@
 
     img {
       width: 100%;
+      border-radius: 5px;
     }
   }
 }

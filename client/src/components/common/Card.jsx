@@ -20,7 +20,7 @@ const Card = ({ site }) => {
       </div>
 
       <div className="card__button">
-        <button onClick={() => navigate(`/site/${site.project_name}`)}>
+        <button onClick={() => navigate(`/site/${site.id}`)}>
           View Site
         </button>
       </div>
