@@ -1,24 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchData } from "../../hooks/CustomHooks";
 
-export const fetchProjects = createAsyncThunk("fetchProjects", async (url, { getState }) => {
-  const { project } = getState();
-
-  if (project.data) {
-    console.log("returing store data");
-    return project.data;
-  }
-  console.log("make request");
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${
-        JSON.parse(localStorage.getItem("authTokens")).access
-      }`,
-    },
-  });
-
-  return response.json();
+export const fetchProjects = createAsyncThunk("fetchProjects", async (url) => {
+  return await fetchData(url);
 });
 
 const projectSlice = createSlice({

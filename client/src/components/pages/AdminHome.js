@@ -5,10 +5,7 @@ import Slider from "../common/Slider";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
-import Popup from "../common/Popup";
-import PopupContractorCard from "../common/PopupContractorCard";
-import { contractor, site } from "../../data/Data";
-import PopupSiteCard from "../common/PopupSiteCard";
+import { baseurl } from "../../config";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,10 +18,13 @@ const Home = () => {
   const pendingSites = projects?.filter(
     (project) => project.status === "pending"
   );
+  const previousSites = projects?.filter(
+    (project) => project.status === "completed"
+  );
 
   useEffect(() => {
     if (!projects) {
-      dispatch(fetchProjects("http://127.0.0.1:8000/api/v1/projects/"));
+      dispatch(fetchProjects(`${baseurl}/api/v1/projects/`));
     }
   }, [dispatch, projects]);
 
@@ -34,11 +34,9 @@ const Home = () => {
 
       <ActiveSiteList sites={activeSites} />
 
-      <PreviousSiteList sites={pendingSites} />
+      <PendingSiteList sites={pendingSites} />
 
-      <Popup>
-        <PopupSiteCard site={site} />
-      </Popup>
+      <PreviousSiteList sites={previousSites} />
     </>
   );
 };
@@ -51,7 +49,31 @@ const ActiveSiteList = ({ sites }) => {
           <span className="heading_red_color">Live</span> Sites
         </div>
 
-        <Slider data={sites} />
+        {sites?.length !== 0 ? (
+          <Slider data={sites} type={"site"} />
+        ) : (
+          <div>"No active sites"</div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const PendingSiteList = ({ sites }) => {
+  return (
+    <div className="homepage__container">
+      <div className="homepage__inner_container">
+        <div className="sites__heading">
+          <span className="heading_red_color" style={{ color: "#808080" }}>
+            Pending
+          </span>{" "}
+          Sites
+        </div>
+        {sites?.length !== 0 ? (
+          <Slider data={sites} type={"site"} />
+        ) : (
+          <div>"No pending sites"</div>
+        )}
       </div>
     </div>
   );
@@ -62,13 +84,14 @@ const PreviousSiteList = ({ sites }) => {
     <div className="homepage__container">
       <div className="homepage__inner_container">
         <div className="sites__heading">
-          <span className="heading_red_color" style={{ color: "#808080" }}>
-            Past
-          </span>{" "}
-          Sites
+          <span className="heading_red_color">Past</span> Sites
         </div>
 
-        <Slider data={sites} />
+        {sites?.length !== 0 ? (
+          <Slider data={sites} type={"site"} />
+        ) : (
+          <div>"No previous sites"</div>
+        )}
       </div>
     </div>
   );

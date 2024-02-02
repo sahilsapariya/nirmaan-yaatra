@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/SignUp.css";
+import "../styles/Auth.scss";
 import buldingImage from "../../assets/images/img_construction.png";
 
 const SignUp = () => {

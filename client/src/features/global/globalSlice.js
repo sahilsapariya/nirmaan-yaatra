@@ -3,15 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 export const globalSlice = createSlice({
   name: "global",
   initialState: {
-    trigger: false,
+    sitePopupTrigger: false,
+    contractorPopupTrigger: true
   },
   reducers: {
-    onTape: (state) => {
-      state.trigger = !state.trigger;
+    onSiteTape: (state) => {
+      state.sitePopupTrigger = !state.sitePopupTrigger;
+    },
+    onContractorTape: (state) => {
+      state.contractorPopupTrigger = !state.contractorPopupTrigger
     }
   }
 });
 
-export const { onTape } = globalSlice.actions;
+export const { onSiteTape, onContractorTape } = globalSlice.actions;
 
 export default globalSlice.reducer;

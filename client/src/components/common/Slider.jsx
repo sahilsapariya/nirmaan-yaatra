@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from "react";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Card from "./Card";
+import Card, { SiteDetailCard } from "./Card";
 // import { liveSiteData } from "../../data/Data";
 
-const Slider = ({ data }) => {
+const Slider = ({ data, type }) => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 
@@ -15,7 +15,12 @@ const Slider = ({ data }) => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
   }, []);
 
-  card = <Card />;
+  if (type === "site") {
+    card = <Card />;
+  } else if (type === "site-detail") {
+    card = <SiteDetailCard />;
+  }
+
 
   const styles = {
     slider__inner_container: {

@@ -1,10 +1,9 @@
 import React from "react";
 import "../styles/Components.scss";
-import { useDispatch } from "react-redux";
-import { onTape } from "../../features/global/globalSlice";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({ site }) => {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="card__container">
@@ -21,7 +20,27 @@ const Card = ({ site }) => {
       </div>
 
       <div className="card__button">
-        <button onClick={() => dispatch(onTape())}>View Site</button>
+        <button onClick={() => navigate(`/site/${site.project_name}`)}>
+          View Site
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export const SiteDetailCard = ({ site }) => {
+  return (
+    <div className="site_detailed_card__container">
+      <div className="card__header">
+        <h3>{site?.title}</h3>
+      </div>
+
+      <div className="card__image">
+        <img src={site?.img_url} alt={site?.title} />
+      </div>
+
+      <div className="card__button">
+        <button>View Details</button>
       </div>
     </div>
   );

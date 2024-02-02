@@ -53,3 +53,40 @@
     }
   }
 }
+
+.site_detailed_card__container {
+  width: 17rem;
+  padding: 0.5rem 1.5rem 1rem 1.5rem;
+  border: solid 1px;
+  border-radius: 5px;
+  text-align: center;
+
+  .card__header {
+    h3 {
+      font-weight: normal;
+      padding-bottom: 5px;
+    }
+  }
+  .card__image {
+    img {
+      width: 100%;
+      border-radius: 5px 5px 0 0;
+      // margin-bottom: 5px;
+      pointer-events: none;
+    }
+  }
+
+  .card__button {
+    button {
+      width: 100%;
+      background: #142c40;
+      color: white;
+      padding: 0.5rem 0;
+      font-size: medium;
+      border: none;
+      outline: none;
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+}

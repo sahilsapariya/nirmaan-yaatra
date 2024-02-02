@@ -72,3 +72,22 @@ export const site = {
   "city": "Nadiad, Gujarat",
   "status": "in-progress"
 }
+
+export const fields = [
+  {
+    "title": "Water Contractor",
+    "img_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2oe6bt_1pqM3qih3o7z6Z_SMHxzQ3qgYgdkfyYiivNLkNusSI_eE-7Le3ig&s"
+  },
+  {
+    "title": "Electricity",
+    "img_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2oe6bt_1pqM3qih3o7z6Z_SMHxzQ3qgYgdkfyYiivNLkNusSI_eE-7Le3ig&s"
+  },
+  {
+    "title": "Concrete",
+    "img_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2oe6bt_1pqM3qih3o7z6Z_SMHxzQ3qgYgdkfyYiivNLkNusSI_eE-7Le3ig&s"
+  },
+  {
+    "title": "Steel",
+    "img_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2oe6bt_1pqM3qih3o7z6Z_SMHxzQ3qgYgdkfyYiivNLkNusSI_eE-7Le3ig&s"
+  },
+]

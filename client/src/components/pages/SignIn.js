@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import "../styles/SignUp.css";
+import "../styles/Auth.scss";
 import buldingImage from "../../assets/images/img_construction.png";
 import AuthContext from "../../context/AuthContext";
 
