@@ -2,25 +2,25 @@ import React from "react";
 import "../styles/Components.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Card = ({ site }) => {
+const Card = ({ data }) => {
   const navigate = useNavigate();
 
   return (
     <div className="card__container">
       <div className="image__container">
-        <img src={site.img_url} alt="ddu" />
+        <img src={data.img_url} alt="ddu" />
       </div>
 
       <div className="card__header">
-        <h3>{site.project_name}</h3>
+        <h3>{data.project_name}</h3>
       </div>
 
       <div className="card__description">
-        <p>{site.description}</p>
+        <p>{data.description}</p>
       </div>
 
       <div className="card__button">
-        <button onClick={() => navigate(`/site/${site.id}`)}>
+        <button onClick={() => navigate(`/site/${data.id}`)}>
           View Site
         </button>
       </div>
@@ -28,22 +28,22 @@ const Card = ({ site }) => {
   );
 };
 
-export const SiteDetailCard = ({ site }) => {
+export const SiteDetailCard = ({ data }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   return (
     <div className="site_detailed_card__container">
       <div className="card__header">
-        <h3>{site?.title}</h3>
+        <h3>{data?.title}</h3>
       </div>
 
       <div className="card__image">
-        <img src={site?.img_url} alt={site?.title} />
+        <img src={data?.img_url} alt={data?.title} />
       </div>
 
       <div className="card__button">
-        <button onClick={() => navigate(`${location.pathname + '/site-detail/' + site.slug}`)}>View Details</button>
+        <button onClick={() => navigate(`${location.pathname + '/site-detail/' + data.slug}`)}>View Details</button>
       </div>
     </div>
   );

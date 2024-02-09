@@ -1,9 +1,8 @@
 import React from "react";
-import ContractorImg from "../../assets/images/contractor.png";
 import { onContractorTape } from "../../features/global/globalSlice";
 import Close from "../../assets/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
-import '../styles/Popup.scss'
+import "../styles/Popup.scss";
 
 const PopupContractorCard = ({ contractor }) => {
   const trigger = useSelector((state) => state.global.contractorPopupTrigger);
@@ -27,34 +26,34 @@ const PopupContractorCard = ({ contractor }) => {
         <div className="card_information__container">
           <div className="information__upper_container">
             <div className="card_image__container">
-              <img src={ContractorImg} alt="contractor" />
+              <img src={contractor?.img_url} alt="contractor" />
             </div>
             <div className="information_table">
-              <h2>{contractor.name}</h2>
-              <p>{contractor.specialization}</p>
+              <h2>{contractor?.name}</h2>
+              <p>{contractor?.specialization}</p>
 
               <table>
                 <tr>
                   <th>Username</th>
-                  <td>{contractor.username}</td>
+                  <td>{contractor?.username}</td>
                 </tr>
                 <tr>
                   <th>Email</th>
-                  <td>{contractor.email}</td>
+                  <td>{contractor?.email}</td>
                 </tr>
                 <tr>
                   <th>Contact</th>
-                  <td>{contractor.phone_number}</td>
+                  <td>{contractor?.phone_number}</td>
                 </tr>
                 <tr>
-                  <th>Location</th>
-                  <td>{contractor.location}</td>
+                  <th>Address</th>
+                  <td>{contractor?.address}</td>
                 </tr>
               </table>
             </div>
           </div>
           <div className="information__lower_container">
-            <p>{contractor.description}</p>
+            <p>{contractor?.description}</p>
           </div>
         </div>
       </div>

@@ -1,0 +1,27 @@
+.site_detail__container {
+  .lower__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .buttons {
+      display: flex;
+      column-gap: 2rem;
+      
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 5px;
+        color: white;
+        background-color: #142c40;
+        padding: 0.5rem 2rem;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        font-size: large;
+      }
+    }
+  }
+}

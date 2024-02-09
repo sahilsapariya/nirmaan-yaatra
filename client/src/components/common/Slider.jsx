@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Card, { SiteDetailCard } from "./Card";
+import { ContractorCard } from "../pages/SiteDetail";
 // import { liveSiteData } from "../../data/Data";
 
 const Slider = ({ data, type }) => {
@@ -19,6 +20,8 @@ const Slider = ({ data, type }) => {
     card = <Card />;
   } else if (type === "site-detail") {
     card = <SiteDetailCard />;
+  } else if (type === "contractors") {
+    card = <ContractorCard />
   }
 
 
@@ -47,7 +50,7 @@ const Slider = ({ data, type }) => {
           return (
             <motion.div className="__card" style={styles.__card} key={index}>
               <React.Fragment>
-                {React.cloneElement(card, { site: data })}
+                {React.cloneElement(card, { data: data })}
               </React.Fragment>
             </motion.div>
           );

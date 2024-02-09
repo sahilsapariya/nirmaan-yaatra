@@ -47,7 +47,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
                 {
                     "id": contractor.id,
                     "username": contractor.username,
-                    "specialization": contractor.specialization
+                    "specialization": contractor.specialization,
+                    "name": contractor.name,
+                    "email": contractor.email,
+                    "phone_number": contractor.phone_number,
+                    "description": "",
+                    "img_url": contractor.img_url
                 } for contractor in contractors
             ]
 
