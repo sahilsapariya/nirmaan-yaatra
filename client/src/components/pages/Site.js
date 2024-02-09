@@ -9,6 +9,7 @@ import "../styles/Popup.scss";
 import { useParams } from "react-router-dom";
 import { fetchSite } from "../../features/site/siteSlice";
 import { baseurl } from "../../config";
+import { fields } from "../../data/Data";
 
 const Site = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Site = () => {
           <ExpensePieChart />
         </div>
         <div className="lower__container">
-          <SiteDetails fields={site?.siteDetails} />
+          <SiteDetails fields={fields} />
         </div>
 
         <PopupSiteCard site={site} />

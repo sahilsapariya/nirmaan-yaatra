@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Components.scss";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Card = ({ site }) => {
   const navigate = useNavigate();
@@ -29,6 +29,9 @@ const Card = ({ site }) => {
 };
 
 export const SiteDetailCard = ({ site }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <div className="site_detailed_card__container">
       <div className="card__header">
@@ -40,7 +43,7 @@ export const SiteDetailCard = ({ site }) => {
       </div>
 
       <div className="card__button">
-        <button>View Details</button>
+        <button onClick={() => navigate(`${location.pathname + '/site-detail/' + site.slug}`)}>View Details</button>
       </div>
     </div>
   );

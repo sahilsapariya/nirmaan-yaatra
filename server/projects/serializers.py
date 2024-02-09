@@ -11,3 +11,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         #           'client_name', 
         #           'client_number', 'client_email', 'client_address', 'client_city']
         fields = '__all__'
+
+class ProjectDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ['id', 'project_name', 'status', 'description', 'img_url', 'location']

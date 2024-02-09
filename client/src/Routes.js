@@ -10,6 +10,8 @@ import AddBill from "./components/pages/AddBill";
 import ProtectedRoute from "./context/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import Site from "./components/pages/Site";
+import SiteDetail from "./components/pages/SiteDetail";
+import Error404 from "./components/pages/Error404";
 
 const ProjectRoutes = () => {
   return (
@@ -41,6 +43,14 @@ const ProjectRoutes = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/site/:siteId/site-detail/:specialization"
+            element={
+              <ProtectedRoute>
+                <SiteDetail />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/add-site"
@@ -52,7 +62,7 @@ const ProjectRoutes = () => {
             }
           />
           <Route
-            path="/site/:siteId/add-contractor"
+            path="/add-contractor"
             excat
             element={
               <ProtectedRoute>
@@ -70,7 +80,7 @@ const ProjectRoutes = () => {
             }
           />
 
-          <Route path="/*" element={<SignIn />} />
+          <Route path="/*" element={<Error404 />} />
         </Routes>
       </AuthProvider>
     </Router>

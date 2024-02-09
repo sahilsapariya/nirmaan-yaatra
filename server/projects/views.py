@@ -13,7 +13,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 
     def list(self, request, *args, **kwargs):
-        if request.user.is_superuser:  # Check if the user is an admin
+        if request.user.is_superuser:
             queryset = self.get_queryset()
             serializer = self.get_serializer(queryset, many=True)
             data = serializer.data
@@ -35,3 +35,23 @@ class ProjectViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
     
+    
+    def retrieve(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance)
+
+            # Get details of contractors associated with the project
+            contractors = instance.contractor_set.all()
+            contractor_data = [
+                {
+                    "id": contractor.id,
+                    "username": contractor.username,
+                    "specialization": contractor.specialization
+                } for contractor in contractors
+            ]
+
+            response_data = serializer.data
+            response_data['contractors'] = contractor_data
+
+            return Response(response_data)

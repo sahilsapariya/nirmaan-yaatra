@@ -59,3 +59,28 @@
     }
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .site_card__container {
+    flex-direction: column-reverse;
+    align-items: center;
+
+    .information__container {
+      width: 100%;
+    }
+    .image__container {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1128px) {
+  .site__container {
+    .upper__container {
+      flex-direction: column;
+    }
+  }
+  .site_card__container {
+    width: calc(100% - 4rem);
+  }
+}

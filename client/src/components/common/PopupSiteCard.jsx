@@ -1,5 +1,4 @@
 import React from "react";
-import SiteImg from "../../assets/images/site.png";
 import { onSiteTape } from "../../features/global/globalSlice";
 import Close from "../../assets/icons/close.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +20,7 @@ const PopupSiteCard = ({ site }) => {
         <div className="card_information__container">
           <div className="information__upper_container">
             <div className="card_image__container">
-              <img src={SiteImg} alt="site" id="site-image" />
+              <img src={site.img_url} alt="site" id="site-image" />
             </div>
             <div className="information_table">
               <h2>{site.project_name}</h2>
