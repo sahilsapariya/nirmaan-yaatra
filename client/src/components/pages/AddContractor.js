@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Navbar from "../common/Navbar";
 import illustration from "../../assets/images/addcontractor_icon.png";
 import "../styles/AddSite.scss";
-import Form from "../common/Form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSite } from "../../features/site/siteSlice";
@@ -13,74 +12,44 @@ const AddContractor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const projects = useState(useSelector((state) => state.project.data));
-  console.log(projects[0]);
-
   const { siteId } = useParams();
 
-  const initialFormData = {
-    name: { label_name: "Name", value: "", type: "text", pl: "Name" },
-    email: {
-      label_name: "Email",
-      value: "",
-      type: "email",
-      pl: "abc@gmail.com",
-    },
-    username: {
-      label_name: "Username",
-      value: "",
-      type: "text",
-      pl: "Username",
-    },
-    phone_number: {
-      label_name: "Contact No.",
-      value: "",
-      type: "number",
-      pl: "+91-1234567890",
-    },
-    address: { label_name: "Address", value: "", type: "text", pl: "Address" },
-    password: {
-      label_name: "Password",
-      value: "",
-      type: "password",
-      pl: "Enter Password",
-    },
-    // description: { label_name: 'Description', value: '', type: 'text', pl: 'Description' },
-    img_url: { label_name: "Image", value: "", type: "url", pl: "Image" },
-    specialization: {
-      label_name: "Specialization",
-      value: "",
-      type: "text",
-      pl: "Specialization",
-    },
-    // projects: {
-    //     label_name: "Projects",
-    //     value: "",
-    //     type: "select",
-    //     pl: "Projects",
-    //     options: projects?.map(project => project.project_name),
-    //     optionDefault: "Select",
-    //   },
+  const projectList = useSelector((state) => state.project.data);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    address: "",
+    img_url: "",
+    specialization: "",
+    projects: [],
+  });
+
+  const handleProjectChange = (e) => {
+    const selectedProjectIds = Array.from(e.target.selectedOptions, (option) =>
+      parseInt(option.value)
+    );
+    setFormData({
+      ...formData,
+      projects: selectedProjectIds,
+    });
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formDataKeyValueForAPI = {};
-    Object.entries(formData).forEach(([fieldName, fieldData]) => {
-      formDataKeyValueForAPI[fieldName] = fieldData.value;
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    formDataKeyValueForAPI["projects"] = projects[0].filter(project => project.id == siteId)[0];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    console.log(formDataKeyValueForAPI["projects"])
-
-    console.log(formDataKeyValueForAPI);
-    const response = await createData(
-      `${baseurl}/api/v1/contractors/`,
-      formDataKeyValueForAPI
-    );
+    await createData(`${baseurl}/api/v1/contractors/`, formData);
 
     dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     navigate(`/site/${siteId}`);
@@ -91,17 +60,121 @@ const AddContractor = () => {
       <Navbar />
       <div className="add_site_container">
         <div className="add_site_image_container">
-          <img src={illustration} alt="Site Related Image" />
+          <img src={illustration} alt="Site Related" />
         </div>
-        <Form
-          RedText="Add"
-          NormalText="Contractor"
-          button_label="Add Contractor"
-          handleSubmit={handleSubmit}
-          formData={formData}
-          setFormData={setFormData}
-          initialFormData={initialFormData}
-        />
+        <div className="add_site_form_container">
+          <div className="sites__heading">
+            <span className="heading_red_color">Add</span> Contractor
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="add_site_form_element">
+              <label>Name</label>
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                type="text"
+                placeholder="Enter name"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Email</label>
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                type="email"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Username</label>
+              <input
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                type="text"
+                placeholder="Enter username"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Password</label>
+              <input
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                type="password"
+                placeholder="Enter password"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Phone number</label>
+              <input
+                name="phone_number"
+                value={formData.phone_number}
+                onChange={handleChange}
+                type="tel"
+                placeholder="Enter phone number"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Address</label>
+              <input
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                type="text"
+                placeholder="Enter address"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Img Url</label>
+              <input
+                name="img_url"
+                value={formData.img_url}
+                onChange={handleChange}
+                type="url"
+                placeholder="Enter image url"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Specialization</label>
+              <input
+                name="specialization"
+                value={formData.specialization}
+                onChange={handleChange}
+                type="text"
+                placeholder="Enter specialization"
+                required
+              />
+            </div>
+            <div className="add_site_form_element">
+              <label>Projects</label>
+              <select
+                multiple
+                className="add_site_select"
+                onChange={handleProjectChange}
+                style={{
+                  color: "black",
+                }}
+              >
+                {projectList?.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.project_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit">Save Details</button>
+          </form>
+        </div>
       </div>
     </>
   );

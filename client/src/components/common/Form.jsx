@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const Form = ({
   handleSubmit,
@@ -17,9 +17,7 @@ const Form = ({
     }));
   };
 
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
+
   return (
     <div className="add_site_form_container">
       <div className="sites__heading">

@@ -5,5 +5,5 @@ from .models import Contractor
 class ContractorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contractor
-        fields = ['id', 'username', 'email', 'phone_number', 'first_name', 'last_name', 'address', 'specialization', 'password', 'projects']
+        fields = ['id', 'username', 'email', 'phone_number', 'name', 'address', 'specialization', 'password', 'projects', 'img_url']
         extra_kwargs = {'password': {'write_only': True}}
