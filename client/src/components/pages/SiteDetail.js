@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../common/Navbar";
 import { useSelector } from "react-redux";
 
@@ -11,15 +11,14 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import LegendToggleOutlinedIcon from "@mui/icons-material/LegendToggleOutlined";
 
 const SiteDetail = () => {
+  const [isBillActive, setIsBillActive] = useState(true);
+  const [isProgress, setIsProgress] = useState(false);
   const { specialization } = useParams();
-
-  const contractor = useSelector(
-    (state) =>
-      state.site.data.contractors.filter(
-        (contractor) => contractor.specialization === specialization
-      )[0]
+  const siteDetail = useSelector((state) =>
+    state.site.data.site_details.find(
+      (category) => category.category === specialization
+    )
   );
-  console.log(contractor);
 
   return (
     <>
@@ -27,23 +26,50 @@ const SiteDetail = () => {
       <div className="site_detail__container">
         <div className="upper__container">
           {/* <Slider data={contractors} type={"contractors"} /> */}
-          <ContractorCard data={contractor} />
+          <ContractorCard data={siteDetail.contractor} />
           <ChartComponent />
         </div>
         <div className="lower__container">
           <div className="buttons">
-            <button>
+            <button
+              onClick={() => {
+                setIsBillActive(true);
+                setIsProgress(false);
+              }}
+            >
               <VerifiedOutlinedIcon />
               Approve/Reject Bills
             </button>
-            <button>
+            <button
+              onClick={() => {
+                setIsBillActive(false);
+                setIsProgress(true);
+              }}
+            >
               <LegendToggleOutlinedIcon />
               Progress Status
             </button>
           </div>
 
-          {/* <PendingBills bills={bills} /> */}
-
+          {isBillActive && (
+            <>
+              <PendingBills
+                bills={siteDetail.bills.filter(
+                  (bill) => bill.status === "pending"
+                )}
+              />
+              <ApprovedBills
+                bills={siteDetail.bills.filter(
+                  (bill) => bill.status === "approved"
+                )}
+              />
+            </>
+          )}
+          {isProgress && (
+            <>
+              <ConstructionProgress data={siteDetail.tasks} />
+            </>
+          )}
         </div>
 
         {/* <PopupContractorCard contractor={contractor} /> */}
@@ -103,12 +129,49 @@ const PendingBills = ({ bills }) => {
   return (
     <div className="bill__container">
       <div className="sites__heading">
-        <span className="heading_red_color" style={{ color: "#808080" }}>
-          Pending
-        </span>{" "}
-        Sites
+        <span className="heading_red_color">Pending</span> Bills
       </div>
-      {bills?.length !== 0 ? <BillsTable /> : <div>"No pending bills"</div>}
+      {bills?.length !== 0 ? (
+        <BillsTable data={bills} />
+      ) : (
+        <div>"No pending bills"</div>
+      )}
+    </div>
+  );
+};
+
+const ApprovedBills = ({ bills }) => {
+  return (
+    <div className="bill__container">
+      <div className="sites__heading">
+        <span className="heading_red_color" style={{ color: "#808080" }}>
+          Approved
+        </span>{" "}
+        Bills
+      </div>
+      {bills?.length !== 0 ? (
+        <BillsTable data={bills} />
+      ) : (
+        <div>"No approved bills"</div>
+      )}
+    </div>
+  );
+};
+
+const ConstructionProgress = ({ data }) => {
+  return (
+    <div className="bill__container">
+      <div className="sites__heading">
+        <span className="heading_red_color">
+          Construction
+        </span>{" "}
+        Task List
+      </div>
+      {data?.length !== 0 ? (
+        <TasksTable data={data} />
+      ) : (
+        <div>"No tasks"</div>
+      )}
     </div>
   );
 };
@@ -126,12 +189,44 @@ const BillsTable = ({ data }) => {
 
         <tbody>
           {data?.map((bill, index) => {
-            <tr>
-              <td>{index + 1}</td>
-              <td>{bill?.name}</td>
-              <td>{bill?.amount}</td>
-              <td>{bill?.status}</td>
-            </tr>;
+            return (
+              <tr>
+                <td>{index + 1}</td>
+                <td>{bill?.name}</td>
+                <td>{bill?.amount}</td>
+                <td>{bill?.status}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+const TasksTable = ({ data }) => {
+  return (
+    <div className="table_wrapper">
+      <table>
+        <thead>
+          <th>No</th>
+          <th>Task Information</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Status</th>
+        </thead>
+
+        <tbody>
+          {data?.map((task, index) => {
+            return (
+              <tr>
+                <td>{index + 1}</td>
+                <td>{task?.name}</td>
+                <td>{task?.start_date}</td>
+                <td>{task?.end_date}</td>
+                <td>{task?.is_complete.toString()}</td>
+              </tr>
+            );
           })}
         </tbody>
       </table>

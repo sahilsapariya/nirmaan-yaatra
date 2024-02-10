@@ -1,12 +1,8 @@
 from rest_framework import viewsets
-from rest_framework import status
 from rest_framework.response import Response
 from .models import Project
 from .serializers import ProjectSerializer
 from users.permissions import IsAdminOrContractor
-from django.http import HttpResponse
-from django.core.serializers import serialize
-from bills.serializers import BillsSerializer
 from collections import defaultdict
 
 
@@ -34,7 +30,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
             instance = self.get_object()
             serializer = self.get_serializer(instance)
 
-             # Get details of contractors associated with the project
             contractors = instance.contractor_set.all()
             contractor_data = {
                 contractor.specialization: {
@@ -49,7 +44,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
                 } for contractor in contractors
             }
 
-            # Get details of bills associated with the project
             bills_queryset = instance.bills_set.all()
             bill_data = defaultdict(list)
             for bill in bills_queryset:
@@ -66,13 +60,26 @@ class ProjectViewSet(viewsets.ModelViewSet):
                     "dealer_phone": bill.dealer_phone
                 })
 
-            # Combine contractors and bills by category
+            tasks_queryset = instance.tasks_set.all()
+            task_data = defaultdict(list)
+            for task in tasks_queryset:
+                task_category = task.category
+                task_data[task_category].append({
+                    "id": task.id,
+                    "name": task.name,
+                    "description": task.description,
+                    "start_date": task.start_date,
+                    "end_date": task.end_date,
+                    "is_complete": task.is_complete
+                })
+
             site_details = []
             for category, contractor_info in contractor_data.items():
                 site_details.append({
                     "category": category,
                     "contractor": contractor_info,
-                    "bills": bill_data[category]
+                    "bills": bill_data[category],
+                    "tasks": task_data[category]
                 })
 
             response_data = serializer.data

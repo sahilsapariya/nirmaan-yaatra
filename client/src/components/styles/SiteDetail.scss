@@ -28,6 +28,10 @@
     }
 
     .bill__container {
+      width: calc(100% - 4rem);
+      margin: 1rem;
+      padding: 1rem;
+
       .sites__heading {
         color: #000;
         text-align: left;
@@ -41,6 +45,64 @@
 
       .heading_red_color {
         color: #f21212;
+      }
+
+      .table_wrapper {
+        overflow-x: auto;
+        margin-top: 1rem;
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+
+          thead {
+            th {
+              border: 1px solid #f0f0f0;
+              padding: 10px;
+              background-color: #142c40;
+              text-align: left;
+              color: white;
+              font-weight: 500;
+
+              &:first-child {
+                border-left-color: #000;
+              }
+              &:last-child {
+                border-right-color: #000;
+              }
+            }
+          }
+
+          tbody {
+            tr {
+              td {
+                border: 1px solid #000;
+                padding: 10px;
+                text-align: left;
+
+                &:first-child {
+                  width: 5%;
+                }
+
+                &:nth-child(2) {
+                  width: 45%;
+                }
+
+                &:nth-child(3) {
+                  width: 20%;
+                }
+
+                &:nth-child(4) {
+                  width: 20%;
+                }
+
+                &:nth-child(5) {
+                  width: 10%;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
