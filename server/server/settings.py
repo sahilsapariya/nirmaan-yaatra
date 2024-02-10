@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     "users",
-    "projects"
+    "projects",
+    "bills"
 ]
 
 AUTH_USER_MODEL = "users.Contractor"

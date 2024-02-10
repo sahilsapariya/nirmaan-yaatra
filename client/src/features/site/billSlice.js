@@ -1,30 +1,30 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchData } from "../../hooks/CustomHooks";
 
-export const fetchSite = createAsyncThunk("fetchSite", async (url) => {
+export const fetchBill = createAsyncThunk("fetchBill", async (url) => {
   return await fetchData(url);
 });
 
-const siteSlice = createSlice({
-  name: "site",
+const billSlice = createSlice({
+  name: "bill",
   initialState: {
     isLoading: false,
     data: null,
     isError: false,
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchSite.pending, (state, action) => {
+    builder.addCase(fetchBill.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchSite.fulfilled, (state, action) => {
+    builder.addCase(fetchBill.fulfilled, (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
     });
-    builder.addCase(fetchSite.rejected, (state, action) => {
+    builder.addCase(fetchBill.rejected, (state, action) => {
       console.log("Error", action.payload);
       state.isError = true;
     });
   },
 });
 
-export default siteSlice.reducer;
+export default billSlice.reducer;

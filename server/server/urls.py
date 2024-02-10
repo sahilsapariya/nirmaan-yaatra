@@ -28,5 +28,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # URL for obtaining JWT token
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # URL for refreshing JWT token
 
-    path('api/v1/', include("projects.urls"))
+    path('api/v1/', include("projects.urls")),
+    path('api/v1/', include("bills.urls"))
 ]

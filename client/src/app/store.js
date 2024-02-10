@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 import projectReducer from '../features/projects/projectSlice';
 import globalReducer from '../features/global/globalSlice';
 import siteReducer from '../features/site/siteSlice';
+import billReducer from '../features/site/billSlice';
 
 const persistConfig = {
   key: 'root',
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   project: projectReducer,
   global: globalReducer,
   site: siteReducer,
+  bill: billReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

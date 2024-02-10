@@ -8,7 +8,10 @@
     .buttons {
       display: flex;
       column-gap: 2rem;
-      
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 1rem;
+
       button {
         display: flex;
         justify-content: center;
@@ -21,6 +24,23 @@
         outline: none;
         border-radius: 5px;
         font-size: large;
+      }
+    }
+
+    .bill__container {
+      .sites__heading {
+        color: #000;
+        text-align: left;
+        font-family: Kanit;
+        font-size: 1.75rem;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0.00438rem;
+        border-bottom: solid 1px #000;
+      }
+
+      .heading_red_color {
+        color: #f21212;
       }
     }
   }

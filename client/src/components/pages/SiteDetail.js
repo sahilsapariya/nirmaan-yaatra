@@ -41,6 +41,9 @@ const SiteDetail = () => {
               Progress Status
             </button>
           </div>
+
+          {/* <PendingBills bills={bills} /> */}
+
         </div>
 
         {/* <PopupContractorCard contractor={contractor} /> */}
@@ -92,6 +95,46 @@ export const ContractorCard = ({ data }) => {
       <div className="image__container">
         <img src={data?.img_url} alt="contractor" />
       </div>
+    </div>
+  );
+};
+
+const PendingBills = ({ bills }) => {
+  return (
+    <div className="bill__container">
+      <div className="sites__heading">
+        <span className="heading_red_color" style={{ color: "#808080" }}>
+          Pending
+        </span>{" "}
+        Sites
+      </div>
+      {bills?.length !== 0 ? <BillsTable /> : <div>"No pending bills"</div>}
+    </div>
+  );
+};
+
+const BillsTable = ({ data }) => {
+  return (
+    <div className="table_wrapper">
+      <table>
+        <thead>
+          <th>No</th>
+          <th>Bill Information</th>
+          <th>Bill Amount</th>
+          <th>Bill Status</th>
+        </thead>
+
+        <tbody>
+          {data?.map((bill, index) => {
+            <tr>
+              <td>{index + 1}</td>
+              <td>{bill?.name}</td>
+              <td>{bill?.amount}</td>
+              <td>{bill?.status}</td>
+            </tr>;
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

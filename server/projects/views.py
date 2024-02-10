@@ -5,6 +5,10 @@ from .models import Project
 from .serializers import ProjectSerializer
 from users.permissions import IsAdminOrContractor
 from django.http import HttpResponse
+from django.core.serializers import serialize
+from bills.serializers import BillsSerializer
+from collections import defaultdict
+
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
@@ -16,19 +20,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
         if request.user.is_superuser:
             queryset = self.get_queryset()
             serializer = self.get_serializer(queryset, many=True)
-            data = serializer.data
 
-            for project_data in data:
-                project = Project.objects.get(id=project_data['id'])
-                contractors = project.contractor_set.all() 
-                project_data['contractors'] = [
-                    {
-                        "id": contractor.id, 
-                        "username":  contractor.username, 
-                        "specialization": contractor.specialization
-                    } for contractor in contractors
-                ]
-            return Response(data)
+            return Response(serializer.data)
         else:
             queryset = self.get_queryset().filter(contractor=request.user)
 
@@ -41,10 +34,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
             instance = self.get_object()
             serializer = self.get_serializer(instance)
 
-            # Get details of contractors associated with the project
+             # Get details of contractors associated with the project
             contractors = instance.contractor_set.all()
-            contractor_data = [
-                {
+            contractor_data = {
+                contractor.specialization: {
                     "id": contractor.id,
                     "username": contractor.username,
                     "specialization": contractor.specialization,
@@ -54,9 +47,35 @@ class ProjectViewSet(viewsets.ModelViewSet):
                     "description": "",
                     "img_url": contractor.img_url
                 } for contractor in contractors
-            ]
+            }
+
+            # Get details of bills associated with the project
+            bills_queryset = instance.bills_set.all()
+            bill_data = defaultdict(list)
+            for bill in bills_queryset:
+                bill_category = bill.category
+                bill_data[bill_category].append({
+                    "id": bill.id,
+                    "name": bill.name,
+                    "amount": bill.amount,
+                    "date": bill.date,
+                    "description": bill.description,
+                    "is_approved": bill.is_approved,
+                    "status": bill.status,
+                    "dealer_name": bill.dealer_name,
+                    "dealer_phone": bill.dealer_phone
+                })
+
+            # Combine contractors and bills by category
+            site_details = []
+            for category, contractor_info in contractor_data.items():
+                site_details.append({
+                    "category": category,
+                    "contractor": contractor_info,
+                    "bills": bill_data[category]
+                })
 
             response_data = serializer.data
-            response_data['contractors'] = contractor_data
+            response_data['site_details'] = site_details
 
             return Response(response_data)
