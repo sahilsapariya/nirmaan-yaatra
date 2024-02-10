@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "users",
     "projects",
-    "bills"
+    "bills",
+    "tasks"
 ]
 
 AUTH_USER_MODEL = "users.Contractor"

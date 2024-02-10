@@ -29,5 +29,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # URL for refreshing JWT token
 
     path('api/v1/', include("projects.urls")),
-    path('api/v1/', include("bills.urls"))
+    path('api/v1/', include("bills.urls")),
+    path('api/v1/', include("tasks.urls")),
 ]
