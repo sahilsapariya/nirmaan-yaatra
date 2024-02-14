@@ -13,12 +13,20 @@ import LegendToggleOutlinedIcon from "@mui/icons-material/LegendToggleOutlined";
 const SiteDetail = () => {
   const [isBillActive, setIsBillActive] = useState(true);
   const [isProgress, setIsProgress] = useState(false);
+
   const { specialization } = useParams();
-  const siteDetail = useSelector((state) =>
-    state.site.data.site_details.find(
-      (category) => category.category === specialization
-    )
+
+  var siteDetail = useSelector((state) => state.site.data.site_details);
+
+  siteDetail = siteDetail?.filter(
+    (category) => category.category == specialization
   );
+
+  if (siteDetail?.length === 0) {
+    return <div>No data for {specialization}</div>;
+  }
+
+  siteDetail = siteDetail[0]
 
   return (
     <>
@@ -26,7 +34,8 @@ const SiteDetail = () => {
       <div className="site_detail__container">
         <div className="upper__container">
           {/* <Slider data={contractors} type={"contractors"} /> */}
-          <ContractorCard data={siteDetail.contractor} />
+          {siteDetail && <ContractorCard data={siteDetail.contractor} />}
+
           <ChartComponent />
         </div>
         <div className="lower__container">
@@ -54,12 +63,12 @@ const SiteDetail = () => {
           {isBillActive && (
             <>
               <PendingBills
-                bills={siteDetail.bills.filter(
+                bills={siteDetail?.bills?.filter(
                   (bill) => bill.status === "pending"
                 )}
               />
               <ApprovedBills
-                bills={siteDetail.bills.filter(
+                bills={siteDetail?.bills?.filter(
                   (bill) => bill.status === "approved"
                 )}
               />
@@ -67,7 +76,7 @@ const SiteDetail = () => {
           )}
           {isProgress && (
             <>
-              <ConstructionProgress data={siteDetail.tasks} />
+              <ConstructionProgress data={siteDetail?.tasks} />
             </>
           )}
         </div>
@@ -162,16 +171,9 @@ const ConstructionProgress = ({ data }) => {
   return (
     <div className="bill__container">
       <div className="sites__heading">
-        <span className="heading_red_color">
-          Construction
-        </span>{" "}
-        Task List
+        <span className="heading_red_color">Construction</span> Task List
       </div>
-      {data?.length !== 0 ? (
-        <TasksTable data={data} />
-      ) : (
-        <div>"No tasks"</div>
-      )}
+      {data?.length !== 0 ? <TasksTable data={data} /> : <div>"No tasks"</div>}
     </div>
   );
 };

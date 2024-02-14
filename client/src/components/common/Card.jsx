@@ -20,9 +20,7 @@ const Card = ({ data }) => {
       </div>
 
       <div className="card__button">
-        <button onClick={() => navigate(`/site/${data.id}`)}>
-          View Site
-        </button>
+        <button onClick={() => navigate(`/site/${data.id}`)}>View Site</button>
       </div>
     </div>
   );
@@ -43,9 +41,44 @@ export const SiteDetailCard = ({ data }) => {
       </div>
 
       <div className="card__button">
-        <button onClick={() => navigate(`${location.pathname + '/site-detail/' + data.slug}`)}>View Details</button>
+        <button
+          onClick={() =>
+            navigate(`${location.pathname + "/site-detail/" + data.slug}`)
+          }
+        >
+          View Details
+        </button>
       </div>
     </div>
+  );
+};
+
+export const BillTable = ({ bill }) => {
+  return (
+    <table className="bill-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Dealer</th>
+          <th>Bill Amount</th>
+          <th>Bill Date</th>
+          <th>Description</th>
+          <th>Bill Doc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{bill.name}</td>
+          <td>{bill.dealer}</td>
+          <td>{bill.billAmount}</td>
+          <td>{bill.billDate}</td>
+          <td>{bill.description}</td>
+          <td>
+            <button className="download-button">Download</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 

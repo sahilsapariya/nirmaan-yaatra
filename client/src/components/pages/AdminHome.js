@@ -6,21 +6,25 @@ import Slider from "../common/Slider";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
 
-
 const Home = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.project);
 
   const projects = state.data;
-  const activeSites = projects?.filter(
-    (project) => project.status === "in_progress"
-  );
-  const pendingSites = projects?.filter(
-    (project) => project.status === "pending"
-  );
-  const previousSites = projects?.filter(
-    (project) => project.status === "completed"
-  );
+
+  var activeSites, pendingSites, previousSites;
+
+  if (projects) {
+    activeSites = projects?.filter(
+      (project) => project.status === "in_progress"
+    );
+    pendingSites = projects?.filter(
+      (project) => project.status === "pending"
+    );
+    previousSites = projects?.filter(
+      (project) => project.status === "completed"
+    );
+  }
 
   useEffect(() => {
     if (!projects) {
