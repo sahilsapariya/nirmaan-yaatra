@@ -1,0 +1,59 @@
+.edit_profile_heading {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.bill_table {
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 1rem;
+
+  .bill-table {
+    border-collapse: collapse;
+    th,
+    td {
+      border: 1px solid black;
+      padding: 15px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #142c40;
+      color: #fff;
+      font-weight: 400;
+      width: 40%;
+    }
+
+    td {
+      width: 60%;
+    }
+
+    .profile_description {
+      text-align: justify;
+      word-wrap: break-all;
+    }
+
+    .bill_download {
+      display: flex;
+      margin: 0 auto;
+      background-color: #fff;
+      border: 0px;
+      font-size: 1rem;
+      cursor: pointer;
+
+      .download_text {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .bill_table {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    max-width: 700px;
+  }
+}

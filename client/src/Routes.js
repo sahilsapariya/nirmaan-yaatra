@@ -12,6 +12,8 @@ import { AuthProvider } from "./context/AuthContext";
 import Site from "./components/pages/Site";
 import SiteDetail from "./components/pages/SiteDetail";
 import Error404 from "./components/pages/Error404";
+import BillPage from "./components/pages/BillPage";
+import EditProfile from "./components/pages/EditProfile";
 
 const ProjectRoutes = () => {
   return (
@@ -79,6 +81,8 @@ const ProjectRoutes = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/bill-page" element={<BillPage />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
 
           <Route path="/*" element={<Error404 />} />
         </Routes>

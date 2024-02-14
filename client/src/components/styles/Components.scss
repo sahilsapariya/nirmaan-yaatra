@@ -92,50 +92,50 @@
   }
 }
 
-.bill-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 1.6rem;
+// .bill-table {
+//   border-collapse: collapse;
+//   width: 100%;
+//   font-size: 1.6rem;
 
-  th,
-  td {
-    border: 1px solid #dddddd;
-    padding: 1rem;
-    text-align: left;
-  }
+//   th,
+//   td {
+//     border: 1px solid #dddddd;
+//     padding: 1rem;
+//     text-align: left;
+//   }
 
-  th {
-    background-color: #f2f2f2;
-  }
+//   th {
+//     background-color: #f2f2f2;
+//   }
 
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
+//   tr:nth-child(even) {
+//     background-color: #f2f2f2;
+//   }
 
-  @media only screen and (max-width: 600px) {
-    font-size: 1.2rem;
+//   @media only screen and (max-width: 600px) {
+//     font-size: 1.2rem;
 
-    th,
-    td {
-      padding: 0.5rem;
-    }
-  }
+//     th,
+//     td {
+//       padding: 0.5rem;
+//     }
+//   }
 
-  .download-button {
-    background-color: #4caf50;
-    border: none;
-    color: white;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.4rem;
-    margin: 0.5rem;
-    cursor: pointer;
+//   .download-button {
+//     background-color: #4caf50;
+//     border: none;
+//     color: white;
+//     padding: 0.5rem 1rem;
+//     text-align: center;
+//     text-decoration: none;
+//     display: inline-block;
+//     font-size: 1.4rem;
+//     margin: 0.5rem;
+//     cursor: pointer;
 
-    @media only screen and (max-width: 600px) {
-      font-size: 1.2rem;
-      padding: 0.3rem 0.8rem;
-    }
-  }
-}
+//     @media only screen and (max-width: 600px) {
+//       font-size: 1.2rem;
+//       padding: 0.3rem 0.8rem;
+//     }
+//   }
+// }
