@@ -3,11 +3,11 @@ import Navbar from "../common/Navbar";
 import illustration from "../../assets/images/addsite_icon.png";
 import "../styles/AddSite.scss";
 import Form from "../common/Form";
-import { createData } from "../../hooks/CustomHooks";
 import { baseurl } from "../../config";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
+import { postData } from "../../api/apis";
 
 const AddSite = () => {
   const navigate = useNavigate();
@@ -60,8 +60,9 @@ const AddSite = () => {
       formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
 
-    const response = await createData(
+    const response = await postData(
       `${baseurl}/api/v1/projects/`,
+      "POST",
       formDataKeyValueForAPI
     );
 

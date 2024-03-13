@@ -4,11 +4,11 @@ import buldingImage from "../../assets/images/img_construction.png";
 import AuthContext from "../../context/AuthContext";
 
 function SignIn() {
-  let { loginUser, logoutUser } = useContext(AuthContext);
+  let { loginUser } = useContext(AuthContext);
 
   useEffect(() => {
-    logoutUser();
-  }, [logoutUser]);
+    localStorage.removeItem("authTokens");
+  }, []);
 
   return (
     <>

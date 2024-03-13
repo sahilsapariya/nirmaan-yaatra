@@ -5,8 +5,8 @@ import "../styles/AddSite.scss";
 import Form from "../common/Form";
 import { useDispatch } from "react-redux";
 import { baseurl } from "../../config";
-import { createData } from "../../hooks/CustomHooks";
 import { fetchProjects } from "../../features/projects/projectSlice";
+import { postData } from "../../api/apis";
 
 const AddBill = () => {
   const dispatch = useDispatch();
@@ -56,9 +56,8 @@ const AddBill = () => {
     Object.entries(formData).forEach(([fieldName, fieldData]) => {
       formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
-    console.log(formDataKeyValueForAPI);
 
-    await createData(`${baseurl}/api/v1/bills/`, formDataKeyValueForAPI);
+    await postData(`${baseurl}/api/v1/bills/`, "POST", formDataKeyValueForAPI);
 
     dispatch(fetchProjects());
     Object.values(formData).forEach((data) => {

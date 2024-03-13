@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../common/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useParams } from "react-router-dom";
 // import Slider from "../common/Slider";
@@ -9,24 +9,34 @@ import "../styles/SiteDetail.scss";
 
 import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import LegendToggleOutlinedIcon from "@mui/icons-material/LegendToggleOutlined";
+import { fetchSite } from "../../features/site/siteSlice";
+import { baseurl } from "../../config";
 
 const SiteDetail = () => {
   const [isBillActive, setIsBillActive] = useState(true);
   const [isProgress, setIsProgress] = useState(false);
+  const dispatch = useDispatch();
+  const { siteId } = useParams();
 
   const { specialization } = useParams();
 
-  var siteDetail = useSelector((state) => state.site.data.site_details);
+  var siteDetail = useSelector((state) => state.site.data?.site_details);
+
+  useEffect(() => {
+    if (!siteDetail) {
+      dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
+    }
+  }, [dispatch, siteDetail, siteId]);
 
   siteDetail = siteDetail?.filter(
-    (category) => category.category == specialization
+    (category) => category.category === specialization
   );
 
   if (siteDetail?.length === 0) {
     return <div>No data for {specialization}</div>;
   }
 
-  siteDetail = siteDetail[0]
+  siteDetail = siteDetail ? siteDetail[0] : null;
 
   return (
     <>

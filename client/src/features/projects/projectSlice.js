@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchData } from "../../hooks/CustomHooks";
 import { baseurl } from "../../config";
+import { getData } from "../../api/apis";
 
 export const fetchProjects = createAsyncThunk("fetchProjects", async () => {
-  return await fetchData(`${baseurl}/api/v1/projects/`);
+  return await getData(`${baseurl}/api/v1/projects/`);
 });
 
 const projectSlice = createSlice({

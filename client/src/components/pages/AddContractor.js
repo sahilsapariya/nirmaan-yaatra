@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../common/Navbar";
 import illustration from "../../assets/images/addcontractor_icon.png";
 import "../styles/AddSite.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSite } from "../../features/site/siteSlice";
-import { createData } from "../../hooks/CustomHooks";
 import { baseurl } from "../../config";
+import { postData } from "../../api/apis";
+import { fetchProjects } from "../../features/projects/projectSlice";
 
 const AddContractor = () => {
   const navigate = useNavigate();
@@ -49,11 +50,18 @@ const AddContractor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await createData(`${baseurl}/api/v1/contractors/`, formData);
+    await postData(`${baseurl}/api/v1/contractors/`, "POST", formData);
 
     dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     navigate(`/site/${siteId}`);
   };
+
+  useEffect(() => {
+    if (!projectList) {
+      dispatch(fetchProjects());
+    }
+  }, [dispatch, projectList]);
+
 
   return (
     <>
