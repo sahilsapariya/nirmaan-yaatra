@@ -14,6 +14,7 @@ import SiteDetail from "./components/pages/SiteDetail";
 import Error404 from "./components/pages/Error404";
 import BillPage from "./components/pages/BillPage";
 import EditProfile from "./components/pages/EditProfile";
+import EditSite from "./components/pages/EditSite";
 
 const ProjectRoutes = () => {
   return (
@@ -64,7 +65,7 @@ const ProjectRoutes = () => {
             }
           />
           <Route
-            path="/add-contractor"
+            path="/site/:siteId/add-contractor"
             excat
             element={
               <ProtectedRoute>
@@ -73,7 +74,7 @@ const ProjectRoutes = () => {
             }
           />
           <Route
-            path="/add-bill"
+            path="/site/:siteId/add-bill"
             excat
             element={
               <ProtectedRoute>
@@ -82,7 +83,8 @@ const ProjectRoutes = () => {
             }
           />
           <Route path="/bill-page" element={<BillPage />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/profiles/:userId/edit" element={<EditProfile />} />
+          <Route path="/site/:siteId/edit-site" element={<EditSite />} />
 
           <Route path="/*" element={<Error404 />} />
         </Routes>

@@ -14,7 +14,10 @@ const fetchData = async (url, method = "GET", body = null) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return response.json();
+    if (method != "DELETE" || method != "PUT") {
+      return response.json();
+    }
+    return;
   } catch (error) {
     throw error;
   }
@@ -31,6 +34,7 @@ export const getData = async (url) => {
 
 export const postData = async (url, data) => {
   try {
+    console.log(data);
     const response = await fetchData(url, "POST", data);
     return response;
   } catch (error) {

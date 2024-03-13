@@ -77,11 +77,36 @@
   display: none;
 }
 
+.profile-dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 2rem;
+  top: 4rem;
+  background-color: white;
+  border: 2px solid #000;
+  border-radius: 5px;
+}
+
+.profile-dropdown button {
+  padding: 0.5rem 2rem;
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.profile-dropdown button:not(:last-child) {
+  border-bottom: 1px solid #000;
+}
+
 @media only screen and (max-width: 768px) {
+
   .navbar__profile,
   .navbar__button {
     display: none;
   }
+
   .navbar__Heading {
     border-bottom: 2px solid #fff;
   }
@@ -100,12 +125,14 @@
     display: flex;
     justify-content: center;
   }
+
   .menu_items {
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
   }
+
   .menu_items button {
     width: 9rem;
     padding: 0.5rem 0;

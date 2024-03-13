@@ -7,9 +7,12 @@ import { useDispatch } from "react-redux";
 import { baseurl } from "../../config";
 import { fetchProjects } from "../../features/projects/projectSlice";
 import { postData } from "../../api/apis";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddBill = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { siteId } = useParams();
 
   const initialFormData = {
     name: { label_name: "Name", value: "", type: "text", pl: "Item Name" },
@@ -57,9 +60,10 @@ const AddBill = () => {
       formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
 
-    await postData(`${baseurl}/api/v1/bills/`, "POST", formDataKeyValueForAPI);
+    await postData(`${baseurl}/api/v1/bills/`, formDataKeyValueForAPI);
 
     dispatch(fetchProjects());
+    navigate(`/site/${siteId}/site-detail/concrete`);
     Object.values(formData).forEach((data) => {
       data.value = null;
     });
