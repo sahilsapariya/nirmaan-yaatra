@@ -26,7 +26,7 @@ const AddSite = () => {
       type: "text",
       pl: "Client Name",
     },
-    budget: { label_name: "Budget", value: "", type: "number", pl: "Budget" },
+    budget: { label_name: "Budget", value: 0, type: "number", pl: "Budget" },
     // constructionType: {
     //   label_name: "Construction Type",
     //   value: "",
@@ -57,12 +57,14 @@ const AddSite = () => {
     event.preventDefault();
     const formDataKeyValueForAPI = {};
     Object.entries(formData).forEach(([fieldName, fieldData]) => {
-      formDataKeyValueForAPI[fieldName] = fieldData.value;
+      if (fieldName == "budget")
+        formDataKeyValueForAPI[fieldName] = parseFloat(fieldData.value);
+      else formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
 
+    console.log(formDataKeyValueForAPI);
     const response = await postData(
       `${baseurl}/api/v1/projects/`,
-      "POST",
       formDataKeyValueForAPI
     );
 

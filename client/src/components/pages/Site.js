@@ -6,10 +6,12 @@ import Slider from "../common/Slider";
 import PopupSiteCard from "../common/PopupSiteCard";
 import { onSiteTape } from "../../features/global/globalSlice";
 import "../styles/Popup.scss";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchSite } from "../../features/site/siteSlice";
 import { baseurl } from "../../config";
 import { fields } from "../../data/Data";
+import { deleteData } from "../../api/apis";
+import { fetchProjects } from "../../features/projects/projectSlice";
 
 const Site = () => {
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const Site = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar siteId={siteId} assignContractor={true} addContractor={true} />
       <div className="site__container">
         <div className="upper__container">
           <SiteCard data={site} />
@@ -44,6 +46,8 @@ const Site = () => {
 
 const SiteCard = ({ data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { siteId } = useParams();
 
   return (
     <div className="site_card__container">
@@ -67,6 +71,24 @@ const SiteCard = ({ data }) => {
 
         <div className="button">
           <button onClick={() => dispatch(onSiteTape())}>Show Details</button>
+          <button
+            onClick={() => navigate(`/site/${siteId}/edit-site`)}
+            style={{ marginLeft: "1rem" }}
+          >
+            Edit Site Details
+          </button>
+          <button
+            onClick={async (e) => {
+              e.preventDefault();
+              await deleteData(`${baseurl}/api/v1/projects/${siteId}/`);
+              dispatch(fetchProjects());
+
+              navigate(`/admin-home`);
+            }}
+            style={{ marginLeft: "1rem", background: "red" }}
+          >
+            Delete Site
+          </button>
         </div>
       </div>
 

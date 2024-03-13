@@ -11,6 +11,8 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 import LegendToggleOutlinedIcon from "@mui/icons-material/LegendToggleOutlined";
 import { fetchSite } from "../../features/site/siteSlice";
 import { baseurl } from "../../config";
+import { fetchBill } from "../../features/site/billSlice";
+import { patchData } from "../../api/apis";
 
 const SiteDetail = () => {
   const [isBillActive, setIsBillActive] = useState(true);
@@ -21,12 +23,16 @@ const SiteDetail = () => {
   const { specialization } = useParams();
 
   var siteDetail = useSelector((state) => state.site.data?.site_details);
+  var billDetail = useSelector((state) => state.bill.data);
 
   useEffect(() => {
     if (!siteDetail) {
       dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     }
-  }, [dispatch, siteDetail, siteId]);
+    if (!billDetail) {
+      dispatch(fetchBill(`${baseurl}/api/v1/bills/`));
+    }
+  }, [dispatch, siteDetail, siteId, billDetail]);
 
   siteDetail = siteDetail?.filter(
     (category) => category.category === specialization
@@ -40,7 +46,7 @@ const SiteDetail = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar billButton={true} siteId={siteId} />
       <div className="site_detail__container">
         <div className="upper__container">
           {/* <Slider data={contractors} type={"contractors"} /> */}
@@ -73,14 +79,10 @@ const SiteDetail = () => {
           {isBillActive && (
             <>
               <PendingBills
-                bills={siteDetail?.bills?.filter(
-                  (bill) => bill.status === "pending"
-                )}
+                bills={billDetail?.filter((bill) => bill.status === "pending")}
               />
               <ApprovedBills
-                bills={siteDetail?.bills?.filter(
-                  (bill) => bill.status === "approved"
-                )}
+                bills={billDetail?.filter((bill) => bill.status === "approved")}
               />
             </>
           )}
@@ -189,6 +191,7 @@ const ConstructionProgress = ({ data }) => {
 };
 
 const BillsTable = ({ data }) => {
+  const dispatch = useDispatch();
   return (
     <div className="table_wrapper">
       <table>
@@ -206,7 +209,23 @@ const BillsTable = ({ data }) => {
                 <td>{index + 1}</td>
                 <td>{bill?.name}</td>
                 <td>{bill?.amount}</td>
-                <td>{bill?.status}</td>
+                <td>
+                  <select
+                    value={bill?.status}
+                    onChange={async (e) => {
+                      e.preventDefault();
+                      await patchData(`${baseurl}/api/v1/bills/${bill?.id}/`, {
+                        status: e.target.value,
+                      });
+
+                      dispatch(fetchBill());
+                    }}
+                  >
+                   <option value={"pending"}>pending</option>
+                   <option value={"approved"}>approved</option>
+                   <option value={"paid"}>paid</option>
+                  </select>
+                </td>
               </tr>
             );
           })}
@@ -215,6 +234,15 @@ const BillsTable = ({ data }) => {
     </div>
   );
 };
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   console.log(formData);
+//   await postData(`${baseurl}/api/v1/contractors/`, formData);
+
+//   dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
+//   navigate(`/site/${siteId}`);
+// };
 
 const TasksTable = ({ data }) => {
   return (

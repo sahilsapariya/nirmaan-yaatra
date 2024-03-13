@@ -5,6 +5,8 @@ import Slider from "../common/Slider";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
+import { getData } from "../../api/apis";
+import { baseurl } from "../../config";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,9 +20,7 @@ const Home = () => {
     activeSites = projects?.filter(
       (project) => project.status === "in_progress"
     );
-    pendingSites = projects?.filter(
-      (project) => project.status === "pending"
-    );
+    pendingSites = projects?.filter((project) => project.status === "pending");
     previousSites = projects?.filter(
       (project) => project.status === "completed"
     );
@@ -32,9 +32,23 @@ const Home = () => {
     }
   }, [dispatch, projects]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getData(`${baseurl}/api/profile/`);
+        console.log(data);
+        localStorage.setItem("user", JSON.stringify(data));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
-      <Navbar />
+      <Navbar addSite={true} />
 
       <ActiveSiteList sites={activeSites} />
 

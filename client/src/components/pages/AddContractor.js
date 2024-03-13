@@ -14,6 +14,7 @@ const AddContractor = () => {
   const dispatch = useDispatch();
 
   const { siteId } = useParams();
+  // console.log("Site id:", siteId);
 
   const projectList = useSelector((state) => state.project.data);
 
@@ -50,7 +51,7 @@ const AddContractor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await postData(`${baseurl}/api/v1/contractors/`, "POST", formData);
+    await postData(`${baseurl}/api/v1/contractors/`, formData);
 
     dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     navigate(`/site/${siteId}`);
@@ -61,7 +62,6 @@ const AddContractor = () => {
       dispatch(fetchProjects());
     }
   }, [dispatch, projectList]);
-
 
   return (
     <>
