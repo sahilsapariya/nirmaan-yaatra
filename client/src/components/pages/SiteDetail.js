@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../common/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import Slider from "../common/Slider";
 import "../styles/Site.scss";
 import "../styles/SiteDetail.scss";
@@ -13,26 +13,30 @@ import { fetchSite } from "../../features/site/siteSlice";
 import { baseurl } from "../../config";
 import { fetchBill } from "../../features/site/billSlice";
 import { patchData } from "../../api/apis";
+import { fetchTask } from "../../features/site/taskSlice";
 
 const SiteDetail = () => {
   const [isBillActive, setIsBillActive] = useState(true);
   const [isProgress, setIsProgress] = useState(false);
   const dispatch = useDispatch();
-  const { siteId } = useParams();
-
-  const { specialization } = useParams();
+  const { siteId, specialization } = useParams();
+  const navigate = useNavigate();
 
   var siteDetail = useSelector((state) => state.site.data?.site_details);
   var billDetail = useSelector((state) => state.bill.data);
+  var taskDetail = useSelector((state) => state.task.data);
 
   useEffect(() => {
     if (!siteDetail) {
       dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     }
     if (!billDetail) {
-      dispatch(fetchBill(`${baseurl}/api/v1/bills/`));
+      dispatch(fetchBill());
     }
-  }, [dispatch, siteDetail, siteId, billDetail]);
+    if (!taskDetail) {
+      dispatch(fetchTask());
+    }
+  }, [dispatch, siteDetail, siteId, billDetail, taskDetail]);
 
   siteDetail = siteDetail?.filter(
     (category) => category.category === specialization
@@ -78,6 +82,24 @@ const SiteDetail = () => {
 
           {isBillActive && (
             <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "1rem 0",
+                  marginBottom: "1rem",
+                }}
+              >
+                <button
+                  onClick={() =>
+                    navigate(`/site/${siteId}/${specialization}/add-bill`)
+                  }
+                >
+                  Add Bill
+                </button>
+              </div>
+
               <PendingBills
                 bills={billDetail?.filter((bill) => bill.status === "pending")}
               />
@@ -88,7 +110,24 @@ const SiteDetail = () => {
           )}
           {isProgress && (
             <>
-              <ConstructionProgress data={siteDetail?.tasks} />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "1rem 0",
+                  marginBottom: "1rem",
+                }}
+              >
+                <button
+                  onClick={() =>
+                    navigate(`/site/${siteId}/${specialization}/add-task`)
+                  }
+                >
+                  Add Task
+                </button>
+              </div>
+              <ConstructionProgress />
             </>
           )}
         </div>
@@ -185,7 +224,7 @@ const ConstructionProgress = ({ data }) => {
       <div className="sites__heading">
         <span className="heading_red_color">Construction</span> Task List
       </div>
-      {data?.length !== 0 ? <TasksTable data={data} /> : <div>"No tasks"</div>}
+      {data?.length !== 0 ? <TasksTable /> : <div>"No tasks"</div>}
     </div>
   );
 };
@@ -221,9 +260,9 @@ const BillsTable = ({ data }) => {
                       dispatch(fetchBill());
                     }}
                   >
-                   <option value={"pending"}>pending</option>
-                   <option value={"approved"}>approved</option>
-                   <option value={"paid"}>paid</option>
+                    <option value={"pending"}>pending</option>
+                    <option value={"approved"}>approved</option>
+                    <option value={"paid"}>paid</option>
                   </select>
                 </td>
               </tr>
@@ -235,16 +274,8 @@ const BillsTable = ({ data }) => {
   );
 };
 
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   console.log(formData);
-//   await postData(`${baseurl}/api/v1/contractors/`, formData);
-
-//   dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
-//   navigate(`/site/${siteId}`);
-// };
-
-const TasksTable = ({ data }) => {
+const TasksTable = () => {
+  const taskDetail = useSelector((state) => state.task.data);
   return (
     <div className="table_wrapper">
       <table>
@@ -257,7 +288,7 @@ const TasksTable = ({ data }) => {
         </thead>
 
         <tbody>
-          {data?.map((task, index) => {
+          {taskDetail?.map((task, index) => {
             return (
               <tr>
                 <td>{index + 1}</td>

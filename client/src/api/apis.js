@@ -14,7 +14,7 @@ const fetchData = async (url, method = "GET", body = null) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    if (method != "DELETE" || method != "PUT") {
+    if (method !== "DELETE" && method !== "PUT") {
       return response.json();
     }
     return;

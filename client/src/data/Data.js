@@ -4,12 +4,12 @@ export const fields = [
   {
     "title": "Water Contractor",
     "img_url": "https://www.kpstructures.in/wp-content/uploads/2020/10/Breakwater-Stormy-Water-Spray-Sea-Wave-Windy-379252-edited.jpg",
-    "slug": "Water Contractor"
+    "slug": "water"
   },
   {
     "title": "Electricity",
     "img_url": "https://www.vantageperformance.com.au/wp-content/uploads/2016/11/success-stories-electrical-construction-feature.jpg",
-    "slug": "Electricity"
+    "slug": "electricity"
   },
   {
     "title": "Concrete",

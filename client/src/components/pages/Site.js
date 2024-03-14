@@ -21,10 +21,8 @@ const Site = () => {
   let site = state.data;
 
   useEffect(() => {
-    if (!site) {
-      dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
-    }
-  }, [dispatch, siteId, site]);
+    dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
+  }, [dispatch, siteId]);
 
   return (
     <>

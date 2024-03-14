@@ -8,13 +8,14 @@ import { fetchSite } from "../../features/site/siteSlice";
 import { baseurl } from "../../config";
 import { postData } from "../../api/apis";
 import { fetchProjects } from "../../features/projects/projectSlice";
+import { fields } from "../../data/Data";
+
 
 const AddContractor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { siteId } = useParams();
-  // console.log("Site id:", siteId);
 
   const projectList = useSelector((state) => state.project.data);
 
@@ -50,6 +51,7 @@ const AddContractor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     await postData(`${baseurl}/api/v1/contractors/`, formData);
 
@@ -154,14 +156,21 @@ const AddContractor = () => {
             </div>
             <div className="add_site_form_element">
               <label>Specialization</label>
-              <input
+              <select
                 name="specialization"
                 value={formData.specialization}
                 onChange={handleChange}
-                type="text"
-                placeholder="Enter specialization"
                 required
-              />
+              >
+                <option value="">--select--</option>
+                {fields.map((field, index) => {
+                  return (
+                    <option key={index} value={field.slug}>
+                      {field.title}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="add_site_form_element">
               <label>Projects</label>

@@ -36,7 +36,6 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const data = await getData(`${baseurl}/api/profile/`);
-        console.log(data);
         localStorage.setItem("user", JSON.stringify(data));
       } catch (error) {
         console.error("Error fetching data:", error);

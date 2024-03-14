@@ -7,41 +7,23 @@ import { useDispatch } from "react-redux";
 import { baseurl } from "../../config";
 import { postData } from "../../api/apis";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchBill } from "../../features/site/billSlice";
+import { fetchTask } from "../../features/site/taskSlice";
 
-const AddBill = () => {
+
+const AddTask = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { siteId, specialization } = useParams();
 
   const initialFormData = {
     name: { label_name: "Name", value: "", type: "text", pl: "Item Name" },
-    dealer_name: {
-      label_name: "Dealer",
-      value: "",
-      type: "text",
-      pl: "Name of The Dealer",
-    },
-    dealer_phone: {
-      label_name: "Dealer Contact",
-      value: "",
-      type: "tel",
-      pl: "Phone number of The Dealer",
-    },
-    amount: {
-      label_name: "Bill Amount",
-      value: 0,
-      type: "number",
-      pl: "10000",
-    },
-    date: { label_name: "Bill Date", value: "", type: "date", pl: "Location" },
+
     description: {
       label_name: "Description",
       value: "",
       type: "text",
       pl: "Description",
     },
-    
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -54,10 +36,11 @@ const AddBill = () => {
     });
 
     formDataKeyValueForAPI["category"] = specialization;
+    formDataKeyValueForAPI["project"] = siteId;
 
-    await postData(`${baseurl}/api/v1/bills/`, formDataKeyValueForAPI);
+    await postData(`${baseurl}/api/v1/tasks/`, formDataKeyValueForAPI);
 
-    dispatch(fetchBill());
+    dispatch(fetchTask());
     navigate(`/site/${siteId}/site-detail/${specialization}`);
     Object.values(formData).forEach((data) => {
       data.value = null;
@@ -73,7 +56,7 @@ const AddBill = () => {
         </div>
         <Form
           RedText="Add"
-          NormalText="Bill"
+          NormalText="Task"
           button_label="Apply"
           handleSubmit={handleSubmit}
           formData={formData}
@@ -85,4 +68,4 @@ const AddBill = () => {
   );
 };
 
-export default AddBill;
+export default AddTask;

@@ -7,7 +7,7 @@ import { baseurl } from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
-import { getData, patchData, postData } from "../../api/apis";
+import { getData, patchData } from "../../api/apis";
 
 const EditSite = () => {
   const navigate = useNavigate();
@@ -75,6 +75,14 @@ const EditSite = () => {
           type: "url",
           pl: "Image",
         },
+        status: {
+          label_name: "Status",
+          value: siteData.status,
+          type: "select",
+          options: ["pending", "in_progress", "completed"],
+          optionDefault: "--select--",
+          pl: "Select status",
+        },
       };
       setFormData(initialFormData);
     }
@@ -84,13 +92,12 @@ const EditSite = () => {
     event.preventDefault();
     const formDataKeyValueForAPI = {};
     Object.entries(formData).forEach(([fieldName, fieldData]) => {
-      if (fieldName == "budget")
+      if (fieldName === "budget")
         formDataKeyValueForAPI[fieldName] = parseFloat(fieldData.value);
       else formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
 
-    console.log(formDataKeyValueForAPI);
-    const response = await patchData(
+    await patchData(
       `${baseurl}/api/v1/projects/${siteId}/`,
       formDataKeyValueForAPI
     );
@@ -102,7 +109,6 @@ const EditSite = () => {
 
   return (
     <>
-      {console.log(formData)}
       <Navbar />
       <div className="add_site_container">
         <div className="add_site_image_container">
