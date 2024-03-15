@@ -15,6 +15,7 @@ const Navbar = ({
   addSite,
   assignContractor,
   addContractor,
+  specialization,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,15 +41,30 @@ const Navbar = ({
         </div>
         <div className="navbar__navigation">
           {billButton && (
-            <div className="navbar__button">
-              <button
-                className="navbar__add_site_button"
-                onClick={() => navigate(`/site/${siteId}/add-bill`)}
-              >
-                <ControlPointIcon />
-                <span className="button_text">Add Bill</span>
-              </button>
-            </div>
+            <>
+              <div className="navbar__button">
+                <button
+                  className="navbar__add_site_button"
+                  onClick={() =>
+                    navigate(`/site/${siteId}/${specialization}/add-bill`)
+                  }
+                >
+                  <ControlPointIcon />
+                  <span className="button_text">Add Bill</span>
+                </button>
+              </div>
+              <div className="navbar__button">
+                <button
+                  className="navbar__add_site_button"
+                  onClick={() =>
+                    navigate(`/site/${siteId}/${specialization}/add-task`)
+                  }
+                >
+                  <ControlPointIcon />
+                  <span className="button_text">Add Task</span>
+                </button>
+              </div>
+            </>
           )}
 
           {addSite && (
