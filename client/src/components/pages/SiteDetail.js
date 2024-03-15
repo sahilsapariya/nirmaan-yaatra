@@ -43,14 +43,45 @@ const SiteDetail = () => {
   );
 
   if (siteDetail?.length === 0) {
-    return <div>No data for {specialization}</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "22rem",
+        }}
+      >
+        <h1>
+          No data for <span style={{ color: "red" }}> {specialization}</span>
+        </h1>
+        <button
+          onClick={() => navigate(`/site/${siteId}`)}
+          style={{
+            padding: "0.5rem 3rem",
+            background: "#14ce00",
+            color: "#fff",
+            borderRadius: "5px",
+            fontSize: "large",
+            cursor: "pointer",
+          }}
+        >
+          Back
+        </button>
+      </div>
+    );
   }
 
   siteDetail = siteDetail ? siteDetail[0] : null;
 
   return (
     <>
-      <Navbar billButton={true} siteId={siteId} />
+      <Navbar
+        billButton={true}
+        siteId={siteId}
+        specialization={specialization}
+      />
       <div className="site_detail__container">
         <div className="upper__container">
           {/* <Slider data={contractors} type={"contractors"} /> */}
@@ -91,13 +122,13 @@ const SiteDetail = () => {
                   marginBottom: "1rem",
                 }}
               >
-                <button
+                {/* <button
                   onClick={() =>
                     navigate(`/site/${siteId}/${specialization}/add-bill`)
                   }
                 >
                   Add Bill
-                </button>
+                </button> */}
               </div>
 
               <PendingBills
@@ -119,13 +150,13 @@ const SiteDetail = () => {
                   marginBottom: "1rem",
                 }}
               >
-                <button
+                {/* <button
                   onClick={() =>
                     navigate(`/site/${siteId}/${specialization}/add-task`)
                   }
                 >
                   Add Task
-                </button>
+                </button> */}
               </div>
               <ConstructionProgress />
             </>
