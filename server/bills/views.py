@@ -8,4 +8,4 @@ from users.permissions import IsAdminOrContractor
 class BillsViewSet(viewsets.ModelViewSet):
     queryset = Bills.objects.all()
     serializer_class = BillsSerializer
-    permission_classes = [IsAdminOrContractor]
+

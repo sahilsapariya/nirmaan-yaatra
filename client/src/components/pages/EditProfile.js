@@ -83,7 +83,7 @@ const EditProfile = () => {
 
     // dispatch(fetchProjects());
 
-    navigate("/admin-home");
+    navigate("/home");
   };
 
   return (

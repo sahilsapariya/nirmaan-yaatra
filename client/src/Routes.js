@@ -23,6 +23,11 @@ import EditSite from "./components/pages/EditSite";
 import AddTask from "./components/pages/AddTask";
 
 const ProjectRoutes = () => {
+  const isAdmin =
+    JSON.parse(localStorage.getItem("authTokens"))?.userType === "ADMIN"
+      ? true
+      : false;
+
   return (
     <Router>
       <AuthProvider>
@@ -37,7 +42,7 @@ const ProjectRoutes = () => {
           />
           <Route path="/sign-in" exact element={<SignIn />} />
           <Route
-            path="/admin-home"
+            path="/home"
             element={
               <ProtectedRoute>
                 <AdminHome />
@@ -48,7 +53,7 @@ const ProjectRoutes = () => {
             path="/site/:siteId"
             element={
               <ProtectedRoute>
-                <Site />
+                {isAdmin ? <Site /> : <Navigate replace to="/home" />}
               </ProtectedRoute>
             }
           />
@@ -100,8 +105,8 @@ const ProjectRoutes = () => {
           <Route path="/bill-page" element={<BillPage />} />
           <Route path="/profiles/:userId/edit" element={<EditProfile />} />
           <Route path="/site/:siteId/edit-site" element={<EditSite />} />
-          <Route path="/" element={<Navigate replace to="/admin-home" />} />
-          
+          <Route path="/" element={<Navigate replace to="/home" />} />
+
           <Route path="/*" element={<Error404 />} />
         </Routes>
       </AuthProvider>

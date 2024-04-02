@@ -1,4 +1,18 @@
 .site_detail__container {
+  .contractor_upper__container {
+    width: 90%;
+    margin: 1rem auto;
+    margin-bottom: 2rem;
+h1 {
+  font-family: 'Kanit';
+  font-weight: 600;
+}
+    p {
+      color: gray;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #000;
+    }
+  }
   .lower__container {
     width: 100%;
     display: flex;

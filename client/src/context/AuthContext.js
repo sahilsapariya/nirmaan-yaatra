@@ -60,7 +60,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(data2));
       }
 
-      navigate("/admin-home");
+      navigate("/home");
+      window.location.reload();
     } else {
       alert("Something went wrong while logging in the user!");
     }

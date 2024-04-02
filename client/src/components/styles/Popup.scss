@@ -64,6 +64,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          width: 50%;
 
           img {
             border: solid 1px;
@@ -96,7 +97,7 @@
 }
 
 #site-image {
-  width: 80%;
+  width: 90%;
 }
 
 @media only screen and (max-width: 768px) {

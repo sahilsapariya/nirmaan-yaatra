@@ -104,7 +104,7 @@ const EditSite = () => {
 
     dispatch(fetchProjects());
 
-    navigate("/admin-home");
+    navigate("/home");
   };
 
   return (

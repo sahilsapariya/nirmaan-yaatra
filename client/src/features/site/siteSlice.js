@@ -18,6 +18,7 @@ const siteSlice = createSlice({
     });
     builder.addCase(fetchSite.fulfilled, (state, action) => {
       state.isLoading = false;
+      console.log("inside the fulfilled case ", action.payload);
       state.data = action.payload;
     });
     builder.addCase(fetchSite.rejected, (state, action) => {

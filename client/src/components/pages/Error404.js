@@ -17,7 +17,7 @@ const Error404 = () => {
     >
       <h1>Oops! page not found</h1>
       <button
-        onClick={() => navigate("/admin-home")}
+        onClick={() => navigate("/home")}
         style={{
           padding: "1rem 2rem",
           background: "#14ce00",

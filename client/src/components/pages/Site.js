@@ -26,7 +26,7 @@ const Site = () => {
 
   return (
     <>
-      <Navbar siteId={siteId} assignContractor={true} addContractor={true} />
+      <Navbar siteId={siteId} addContractor={true} />
       <div className="site__container">
         <div className="upper__container">
           <SiteCard data={site} />
@@ -69,24 +69,29 @@ const SiteCard = ({ data }) => {
 
         <div className="button">
           <button onClick={() => dispatch(onSiteTape())}>Show Details</button>
-          <button
-            onClick={() => navigate(`/site/${siteId}/edit-site`)}
-            style={{ marginLeft: "1rem" }}
-          >
-            Edit Site Details
-          </button>
-          <button
-            onClick={async (e) => {
-              e.preventDefault();
-              await deleteData(`${baseurl}/api/v1/projects/${siteId}/`);
-              dispatch(fetchProjects());
+          {JSON.parse(localStorage.getItem("authTokens")).userType ===
+            "ADMIN" && (
+            <>
+              <button
+                onClick={() => navigate(`/site/${siteId}/edit-site`)}
+                style={{ marginLeft: "1rem" }}
+              >
+                Edit Site Details
+              </button>
+              <button
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await deleteData(`${baseurl}/api/v1/projects/${siteId}/`);
+                  dispatch(fetchProjects());
 
-              navigate(`/admin-home`);
-            }}
-            style={{ marginLeft: "1rem", background: "red" }}
-          >
-            Delete Site
-          </button>
+                  navigate(`/home`);
+                }}
+                style={{ marginLeft: "1rem", background: "red" }}
+              >
+                Delete Site
+              </button>
+            </>
+          )}
         </div>
       </div>
 

@@ -13,7 +13,6 @@ const Navbar = ({
   username,
   siteId,
   billButton,
-  assignContractor,
   addContractor,
   specialization,
 }) => {
@@ -34,14 +33,11 @@ const Navbar = ({
   return (
     <>
       <div className="navbar__Heading">
-        <div
-          className="navbar__logo_Name"
-          onClick={() => navigate("/admin-home")}
-        >
+        <div className="navbar__logo_Name" onClick={() => navigate("/home")}>
           Niramaanyatra
         </div>
         <div className="navbar__navigation">
-          {username && (
+          {username && !isNavbarActive && (
             <p style={{ paddingRight: "10px" }}>Welcome, {username}</p>
           )}
           {billButton && (
@@ -79,18 +75,6 @@ const Navbar = ({
               >
                 <ControlPointIcon />
                 <span className="button_text">Add Site</span>
-              </button>
-            </div>
-          )}
-
-          {assignContractor && (
-            <div className="navbar__button">
-              <button
-                className="navbar__add_site_button"
-                onClick={() => navigate("/assign-contractor")}
-              >
-                <ControlPointIcon />
-                <span className="button_text">Assign Contractor</span>
               </button>
             </div>
           )}
@@ -161,12 +145,34 @@ const Navbar = ({
       {isNavbarActive && (
         <div className="navbar_home_screen">
           <div className="menu_items">
-            <button onClick={() => navigate("/add-site")}>Add site</button>
-            <button onClick={() => navigate("/add-contractor")}>
-              Add contractor
+            {JSON.parse(localStorage.getItem("authTokens")).userType ===
+              "ADMIN" && (
+              <>
+                <button onClick={() => navigate("/add-site")}>Add site</button>
+                <button onClick={() => navigate("/add-contractor")}>
+                  Add contractor
+                </button>
+              </>
+            )}
+            <button
+              onClick={() =>
+                navigate(
+                  `/profiles/${
+                    JSON.parse(localStorage.getItem("user")).id
+                  }/edit`
+                )
+              }
+            >
+              Edit profile
             </button>
-            <button onClick={() => navigate("/assign-contractor")}>
-              Assign contractor
+            <button
+              onClick={() => {
+                dispatch(clearState());
+                logoutUser();
+                navigate("/sign-in");
+              }}
+            >
+              Logout
             </button>
           </div>
         </div>

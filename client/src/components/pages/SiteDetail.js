@@ -22,12 +22,14 @@ const SiteDetail = () => {
   const { siteId, specialization } = useParams();
   const navigate = useNavigate();
 
-  var siteDetail = useSelector((state) => state.site.data?.site_details);
+  var site = useSelector((state) => state.site.data);
   var billDetail = useSelector((state) => state.bill.data);
   var taskDetail = useSelector((state) => state.task.data);
 
+  var siteDetail = site?.site_details;
+
   useEffect(() => {
-    if (!siteDetail) {
+    if (!site) {
       dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     }
     if (!billDetail) {
@@ -36,13 +38,16 @@ const SiteDetail = () => {
     if (!taskDetail) {
       dispatch(fetchTask());
     }
-  }, [dispatch, siteDetail, siteId, billDetail, taskDetail]);
+  }, [dispatch, site, siteId, billDetail, taskDetail]);
 
-  siteDetail = siteDetail?.filter(
+  siteDetail = siteDetail?.site_details?.filter(
     (category) => category.category === specialization
   );
 
-  if (siteDetail?.length === 0) {
+  if (
+    siteDetail?.length === 0 &&
+    JSON.parse(localStorage.getItem("authTokens")).userType === "ADMIN"
+  ) {
     return (
       <div
         style={{
@@ -83,12 +88,19 @@ const SiteDetail = () => {
         specialization={specialization}
       />
       <div className="site_detail__container">
-        <div className="upper__container">
-          {/* <Slider data={contractors} type={"contractors"} /> */}
-          {siteDetail && <ContractorCard data={siteDetail.contractor} />}
+        {JSON.parse(localStorage.getItem("authTokens")).userType === "ADMIN" ? (
+          <div className="upper__container">
+            {/* <Slider data={contractors} type={"contractors"} /> */}
+            {siteDetail && <ContractorCard data={siteDetail.contractor} />}
 
-          <ChartComponent />
-        </div>
+            <ChartComponent />
+          </div>
+        ) : (
+          <div className="contractor_upper__container">
+            <h1>{site?.project_name}</h1>
+            <p>{site?.location}</p>
+          </div>
+        )}
         <div className="lower__container">
           <div className="buttons">
             <button
@@ -121,15 +133,7 @@ const SiteDetail = () => {
                   padding: "1rem 0",
                   marginBottom: "1rem",
                 }}
-              >
-                {/* <button
-                  onClick={() =>
-                    navigate(`/site/${siteId}/${specialization}/add-bill`)
-                  }
-                >
-                  Add Bill
-                </button> */}
-              </div>
+              ></div>
 
               <PendingBills
                 bills={billDetail?.filter((bill) => bill.status === "pending")}
@@ -149,21 +153,11 @@ const SiteDetail = () => {
                   padding: "1rem 0",
                   marginBottom: "1rem",
                 }}
-              >
-                {/* <button
-                  onClick={() =>
-                    navigate(`/site/${siteId}/${specialization}/add-task`)
-                  }
-                >
-                  Add Task
-                </button> */}
-              </div>
+              ></div>
               <ConstructionProgress />
             </>
           )}
         </div>
-
-        {/* <PopupContractorCard contractor={contractor} /> */}
       </div>
     </>
   );
@@ -197,12 +191,6 @@ export const ContractorCard = ({ data }) => {
             <td>{data?.phone_number}</td>
           </tr>
         </table>
-
-        {/* <div className="button">
-          <button onClick={() => dispatch(onContractorTape())}>
-            Show Details
-          </button>
-        </div> */}
       </div>
 
       <div className="image__container">
@@ -275,23 +263,34 @@ const BillsTable = ({ data }) => {
                 <td>{index + 1}</td>
                 <td>{bill?.name}</td>
                 <td>{bill?.amount}</td>
-                <td>
-                  <select
-                    value={bill?.status}
-                    onChange={async (e) => {
-                      e.preventDefault();
-                      await patchData(`${baseurl}/api/v1/bills/${bill?.id}/`, {
-                        status: e.target.value,
-                      });
 
-                      dispatch(fetchBill());
-                    }}
-                  >
-                    <option value={"pending"}>pending</option>
-                    <option value={"approved"}>approved</option>
-                    <option value={"paid"}>paid</option>
-                  </select>
-                </td>
+                {JSON.parse(localStorage.getItem("authTokens")).userType ===
+                "ADMIN" ? (
+                  <td>
+                    <select
+                      value={bill?.status}
+                      onChange={async (e) => {
+                        e.preventDefault();
+                        await patchData(
+                          `${baseurl}/api/v1/bills/${bill?.id}/`,
+                          {
+                            status: e.target.value,
+                          }
+                        );
+
+                        dispatch(fetchBill());
+                      }}
+                    >
+                      <option value={"pending"}>pending</option>
+                      <option value={"approved"}>approved</option>
+                      <option value={"paid"}>paid</option>
+                    </select>
+                  </td>
+                ) : (
+                  <td>
+                    {bill?.status === "approved" ? "Approved" : "Pending"}
+                  </td>
+                )}
               </tr>
             );
           })}
@@ -324,22 +323,32 @@ const TasksTable = () => {
                 <td>{task?.name}</td>
                 <td>{task?.start_date}</td>
                 <td>{task?.end_date}</td>
-                <td>
-                  <select
-                    value={task?.is_complete}
-                    onChange={async (e) => {
-                      e.preventDefault();
-                      await patchData(`${baseurl}/api/v1/tasks/${task?.id}/`, {
-                        is_complete: e.target.value,
-                      });
+                {JSON.parse(localStorage.getItem("authTokens")).userType ===
+                "ADMIN" ? (
+                  <td>
+                    <select
+                      value={task?.is_complete}
+                      onChange={async (e) => {
+                        e.preventDefault();
+                        await patchData(
+                          `${baseurl}/api/v1/tasks/${task?.id}/`,
+                          {
+                            is_complete: e.target.value,
+                          }
+                        );
 
-                      dispatch(fetchTask());
-                    }}
-                  >
-                    <option value={"true"}>Completed</option>
-                    <option value={"false"}>Pending</option>
-                  </select>
-                </td>
+                        dispatch(fetchTask());
+                      }}
+                    >
+                      <option value={"true"}>Completed</option>
+                      <option value={"false"}>Pending</option>
+                    </select>
+                  </td>
+                ) : (
+                  <td>
+                    {task?.is_complete === "true" ? "Completed" : "Pending"}
+                  </td>
+                )}
               </tr>
             );
           })}

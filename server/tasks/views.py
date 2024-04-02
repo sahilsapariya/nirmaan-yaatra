@@ -6,4 +6,3 @@ from users.permissions import IsAdminOrContractor
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Tasks.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAdminOrContractor]

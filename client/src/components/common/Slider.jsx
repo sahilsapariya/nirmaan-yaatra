@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from "react";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Card, { SiteDetailCard } from "./Card";
+import AdminCard, { ContractorCard as ConCard, SiteDetailCard } from "./Card";
 import { ContractorCard } from "../pages/SiteDetail";
 // import { liveSiteData } from "../../data/Data";
 
-const Slider = ({ data, type }) => {
+const Slider = ({ data, type, isAdmin }) => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 
@@ -17,13 +17,16 @@ const Slider = ({ data, type }) => {
   }, []);
 
   if (type === "site") {
-    card = <Card />;
+    if (JSON.parse(localStorage.getItem("authTokens"))?.userType === "ADMIN") {
+      card = <AdminCard />;
+    } else {
+      card = <ConCard />;
+    }
   } else if (type === "site-detail") {
     card = <SiteDetailCard />;
   } else if (type === "contractors") {
-    card = <ContractorCard />
+    card = <ContractorCard />;
   }
-
 
   const styles = {
     slider__inner_container: {
@@ -50,7 +53,7 @@ const Slider = ({ data, type }) => {
           return (
             <motion.div className="__card" style={styles.__card} key={index}>
               <React.Fragment>
-                {React.cloneElement(card, { data: data })}
+                {React.cloneElement(card, { data: data, isAdmin: isAdmin })}
               </React.Fragment>
             </motion.div>
           );

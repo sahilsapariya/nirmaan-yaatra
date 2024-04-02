@@ -4,4 +4,4 @@ from users.models import Contractor
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contractor
-        fields = ["name", "id", "img_url"]
+        fields = ["name", "id", "img_url", "specialization"]
