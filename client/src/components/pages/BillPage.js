@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/BillPage.scss";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 
-const EditProfilePage = ({ bill }) => {
+const BillPage = ({ bill }) => {
   return (
     <>
       <div className="edit_profile_heading">
@@ -55,4 +55,4 @@ const EditProfilePage = ({ bill }) => {
   );
 };
 
-export default EditProfilePage;
+export default BillPage;

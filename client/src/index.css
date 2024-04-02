@@ -13,3 +13,27 @@ body {
 button {
   cursor: pointer;
 }
+
+.pie_chart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pie_chart canvas {
+  width: 80% !important;
+  max-width: 350px;
+  height: 80% !important;
+  max-height: 375px;
+}
+
+@media screen and (min-width: 768px) {
+  .pie_chart {
+    width: 40% !important;
+  }
+  .pie_chart canvas {
+    max-height: unset;
+    height: unset;
+  }
+}

@@ -27,22 +27,24 @@ const PopupSiteCard = ({ site }) => {
               <p>{site.city}</p>
 
               <table>
-                <tr>
-                  <th>Client name</th>
-                  <td>{site.client_name}</td>
-                </tr>
-                <tr>
-                  <th>Budget</th>
-                  <td>{site.budget}</td>
-                </tr>
-                <tr>
-                  <th>Status</th>
-                  <td>{site.status}</td>
-                </tr>
-                <tr>
-                  <th>Location</th>
-                  <td>{site.location}</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th>Client name</th>
+                    <td>{site.client_name}</td>
+                  </tr>
+                  <tr>
+                    <th>Budget</th>
+                    <td>{site.budget}</td>
+                  </tr>
+                  <tr>
+                    <th>Status</th>
+                    <td>{site.status}</td>
+                  </tr>
+                  <tr>
+                    <th>Location</th>
+                    <td>{site.location}</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>

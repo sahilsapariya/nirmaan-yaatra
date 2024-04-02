@@ -71,7 +71,7 @@ const ProjectRoutes = () => {
             exact
             element={
               <ProtectedRoute>
-                <AddSite />
+                {isAdmin ? <AddSite /> : <Navigate replace to="/home" />}
               </ProtectedRoute>
             }
           />
@@ -80,7 +80,7 @@ const ProjectRoutes = () => {
             exact
             element={
               <ProtectedRoute>
-                <AddContractor />
+                {isAdmin ? <AddContractor /> : <Navigate replace to="/home" />}
               </ProtectedRoute>
             }
           />

@@ -12,6 +12,7 @@ import { baseurl } from "../../config";
 import { fields } from "../../data/Data";
 import { deleteData } from "../../api/apis";
 import { fetchProjects } from "../../features/projects/projectSlice";
+import PieChart from "../common/PieChart";
 
 const Site = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,16 @@ const Site = () => {
       <div className="site__container">
         <div className="upper__container">
           <SiteCard data={site} />
-          <ExpensePieChart />
+
+          <PieChart
+            labels={["1", "2"]}
+            datasets={[
+              {
+                data: [60, 40],
+                backgroundColor: ["#FF6384", "#36A2EB"],
+              },
+            ]}
+          />
         </div>
         <div className="lower__container">
           <SiteDetails fields={fields} />
@@ -53,18 +63,20 @@ const SiteCard = ({ data }) => {
         <h2>{data?.project_name}</h2>
 
         <table>
-          <tr>
-            <th>Location</th>
-            <td>{data?.location}</td>
-          </tr>
-          <tr>
-            <th>Client</th>
-            <td>{data?.client_name}</td>
-          </tr>
-          <tr>
-            <th>Budget</th>
-            <td>{data?.budget}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>Location</th>
+              <td>{data?.location}</td>
+            </tr>
+            <tr>
+              <th>Client</th>
+              <td>{data?.client_name}</td>
+            </tr>
+            <tr>
+              <th>Budget</th>
+              <td>{data?.budget}</td>
+            </tr>
+          </tbody>
         </table>
 
         <div className="button">
@@ -100,10 +112,6 @@ const SiteCard = ({ data }) => {
       </div>
     </div>
   );
-};
-
-const ExpensePieChart = () => {
-  return <div className="pie_chart">Pie chart</div>;
 };
 
 const SiteDetails = ({ fields }) => {

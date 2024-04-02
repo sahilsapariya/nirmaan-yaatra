@@ -14,6 +14,7 @@ import { baseurl } from "../../config";
 import { fetchBill } from "../../features/site/billSlice";
 import { patchData } from "../../api/apis";
 import { fetchTask } from "../../features/site/taskSlice";
+import PieChart from "../common/PieChart";
 
 const SiteDetail = () => {
   const [isBillActive, setIsBillActive] = useState(true);
@@ -40,7 +41,7 @@ const SiteDetail = () => {
     }
   }, [dispatch, site, siteId, billDetail, taskDetail]);
 
-  siteDetail = siteDetail?.site_details?.filter(
+  siteDetail = siteDetail?.filter(
     (category) => category.category === specialization
   );
 
@@ -93,7 +94,15 @@ const SiteDetail = () => {
             {/* <Slider data={contractors} type={"contractors"} /> */}
             {siteDetail && <ContractorCard data={siteDetail.contractor} />}
 
-            <ChartComponent />
+            <PieChart
+              labels={["1", "2"]}
+              datasets={[
+                {
+                  data: [60, 40],
+                  backgroundColor: ["#FF6384", "#36A2EB"],
+                },
+              ]}
+            />
           </div>
         ) : (
           <div className="contractor_upper__container">
@@ -110,7 +119,10 @@ const SiteDetail = () => {
               }}
             >
               <VerifiedOutlinedIcon />
-              Approve/Reject Bills
+              {JSON.parse(localStorage.getItem("authTokens")).userType ===
+              "ADMIN"
+                ? "Approve/Reject Bills"
+                : "Bills"}
             </button>
             <button
               onClick={() => {
@@ -119,7 +131,7 @@ const SiteDetail = () => {
               }}
             >
               <LegendToggleOutlinedIcon />
-              Progress Status
+              Tasks
             </button>
           </div>
 
@@ -171,10 +183,6 @@ const SiteDetail = () => {
   );
 };
 
-const ChartComponent = () => {
-  return <div className="pie_chart">pie chart</div>;
-};
-
 export const ContractorCard = ({ data }) => {
   return (
     <div className="contractor_card__container">
@@ -182,22 +190,24 @@ export const ContractorCard = ({ data }) => {
         <h2>{data?.name}</h2>
 
         <table>
-          <tr>
-            <th>Role</th>
-            <td>{data?.specialization}</td>
-          </tr>
-          <tr>
-            <th>Username</th>
-            <td>{data?.username}</td>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <td>{data?.email}</td>
-          </tr>
-          <tr>
-            <th>Contact</th>
-            <td>{data?.phone_number}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>Role</th>
+              <td>{data?.specialization}</td>
+            </tr>
+            <tr>
+              <th>Username</th>
+              <td>{data?.username}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{data?.email}</td>
+            </tr>
+            <tr>
+              <th>Contact</th>
+              <td>{data?.phone_number}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -258,20 +268,23 @@ const ConstructionProgress = ({ data, specialization }) => {
 
 const BillsTable = ({ data }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="table_wrapper">
       <table>
         <thead>
-          <th>No</th>
-          <th>Bill Information</th>
-          <th>Bill Amount</th>
-          <th>Bill Status</th>
+          <tr>
+            <th>No</th>
+            <th>Bill Information</th>
+            <th>Bill Amount</th>
+            <th>Bill Status</th>
+          </tr>
         </thead>
 
         <tbody>
           {data?.map((bill, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{bill?.name}</td>
                 <td>{bill?.amount}</td>
@@ -299,8 +312,21 @@ const BillsTable = ({ data }) => {
                     </select>
                   </td>
                 ) : (
-                  <td>
-                    {bill?.status === "approved" ? "Approved" : "Pending"}
+                  <td
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    <button
+                      style={{
+                        padding: "2px 1rem",
+                      }}
+                      onClick={() => {
+                        navigate(`/bill-page`);
+                      }}
+                    >
+                      View details
+                    </button>
                   </td>
                 )}
               </tr>
@@ -326,17 +352,19 @@ const TasksTable = ({ specialization }) => {
     <div className="table_wrapper">
       <table>
         <thead>
-          <th>No</th>
-          <th>Task Information</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Status</th>
+          <tr>
+            <th>No</th>
+            <th>Task Information</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+          </tr>
         </thead>
 
         <tbody>
           {taskDetail?.map((task, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{task?.name}</td>
                 <td>{task?.start_date}</td>

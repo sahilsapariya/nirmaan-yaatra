@@ -33,22 +33,24 @@ const PopupContractorCard = ({ contractor }) => {
               <p>{contractor?.specialization}</p>
 
               <table>
-                <tr>
-                  <th>Username</th>
-                  <td>{contractor?.username}</td>
-                </tr>
-                <tr>
-                  <th>Email</th>
-                  <td>{contractor?.email}</td>
-                </tr>
-                <tr>
-                  <th>Contact</th>
-                  <td>{contractor?.phone_number}</td>
-                </tr>
-                <tr>
-                  <th>Address</th>
-                  <td>{contractor?.address}</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th>Username</th>
+                    <td>{contractor?.username}</td>
+                  </tr>
+                  <tr>
+                    <th>Email</th>
+                    <td>{contractor?.email}</td>
+                  </tr>
+                  <tr>
+                    <th>Contact</th>
+                    <td>{contractor?.phone_number}</td>
+                  </tr>
+                  <tr>
+                    <th>Address</th>
+                    <td>{contractor?.address}</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>

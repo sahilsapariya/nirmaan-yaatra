@@ -27,14 +27,6 @@ const AddSite = () => {
       pl: "Client Name",
     },
     budget: { label_name: "Budget", value: 0, type: "number", pl: "Budget" },
-    // constructionType: {
-    //   label_name: "Construction Type",
-    //   value: "",
-    //   type: "select",
-    //   pl: "Construction Type",
-    //   options: ["Building", "Tenament", "Other"],
-    //   optionDefault: "Select",
-    // },
     location: {
       label_name: "Location",
       value: "",
@@ -57,7 +49,7 @@ const AddSite = () => {
     event.preventDefault();
     const formDataKeyValueForAPI = {};
     Object.entries(formData).forEach(([fieldName, fieldData]) => {
-      if (fieldName == "budget")
+      if (fieldName === "budget")
         formDataKeyValueForAPI[fieldName] = parseFloat(fieldData.value);
       else formDataKeyValueForAPI[fieldName] = fieldData.value;
     });

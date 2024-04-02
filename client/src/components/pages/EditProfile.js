@@ -4,15 +4,11 @@ import illustration from "../../assets/images/profileImage.png";
 import "../styles/AddSite.scss";
 import Form from "../common/Form";
 import { baseurl } from "../../config";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { fetchProjects } from "../../features/projects/projectSlice";
-import { getData, patchData, postData, putData } from "../../api/apis";
+import { useNavigate } from "react-router-dom";
+import { getData, patchData } from "../../api/apis";
 
 const EditProfile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { siteId } = useParams();
 
   const [contractorData, setContractorData] = useState(null);
   const [formData, setFormData] = useState(null);
@@ -91,7 +87,7 @@ const EditProfile = () => {
       <div className="add_site_container">
         <div className="add_site_image_container">
           <img
-            src={formData?.img_url.value}
+            src={formData?.img_url.value || illustration}
             alt="Site Related"
             style={{
               borderRadius: "50%",
