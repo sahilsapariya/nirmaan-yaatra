@@ -1,17 +1,32 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import projectReducer from '../features/projects/projectSlice';
-import globalReducer from '../features/global/globalSlice';
-import siteReducer from '../features/site/siteSlice';
-import billReducer from '../features/site/billSlice';
-import taskReducer from '../features/site/taskSlice';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import projectReducer from "../features/projects/projectSlice";
+import globalReducer from "../features/global/globalSlice";
+import siteReducer from "../features/site/siteSlice";
+import billReducer from "../features/site/billSlice";
+import taskReducer from "../features/site/taskSlice";
 
-const rootReducer = combineReducers({
+// Action creator for clearing all state
+export const clearState = () => ({
+  type: "CLEAR_STATE",
+});
+
+// Define a root reducer that listens for CLEAR_STATE
+const appReducer = combineReducers({
   project: projectReducer,
   global: globalReducer,
   site: siteReducer,
   bill: billReducer,
   task: taskReducer,
 });
+
+const rootReducer = (state, action) => {
+  console.log("Reducer action type:", action.type);
+  if (action.type === "CLEAR_STATE") {
+    console.log("Clearing state...");
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 export const store = configureStore({
   reducer: rootReducer,

@@ -196,10 +196,6 @@ export const ContractorCard = ({ data }) => {
             <th>Contact</th>
             <td>{data?.phone_number}</td>
           </tr>
-          <tr>
-            <th>Description</th>
-            <td>{data?.description}</td>
-          </tr>
         </table>
 
         {/* <div className="button">
@@ -307,6 +303,8 @@ const BillsTable = ({ data }) => {
 
 const TasksTable = () => {
   const taskDetail = useSelector((state) => state.task.data);
+  const dispatch = useDispatch();
+
   return (
     <div className="table_wrapper">
       <table>
@@ -326,7 +324,22 @@ const TasksTable = () => {
                 <td>{task?.name}</td>
                 <td>{task?.start_date}</td>
                 <td>{task?.end_date}</td>
-                <td>{task?.is_complete.toString()}</td>
+                <td>
+                  <select
+                    value={task?.is_complete}
+                    onChange={async (e) => {
+                      e.preventDefault();
+                      await patchData(`${baseurl}/api/v1/tasks/${task?.id}/`, {
+                        is_complete: e.target.value,
+                      });
+
+                      dispatch(fetchTask());
+                    }}
+                  >
+                    <option value={"true"}>Completed</option>
+                    <option value={"false"}>Pending</option>
+                  </select>
+                </td>
               </tr>
             );
           })}

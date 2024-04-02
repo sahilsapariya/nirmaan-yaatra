@@ -2,16 +2,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import Project
 from .serializers import ProjectSerializer
-from users.permissions import IsAdminOrContractor
 from collections import defaultdict
-from rest_framework.exceptions import NotFound
-from rest_framework.exceptions import PermissionDenied
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    permission_classes = [IsAdminOrContractor]
 
 
     def list(self, request, *args, **kwargs):
@@ -28,14 +24,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
     
 
     def retrieve(self, request, *args, **kwargs):
-        try:
-            instance = self.get_object()
-        except Project.DoesNotExist:
-            raise NotFound("Project not found")
-
+        print("Inside retrieve method")
+        instance = self.get_object()
         serializer = self.get_serializer(instance)
+        contractor_data = {}
 
         if request.user.is_superuser:
+            print("inside superuser if condition User is authorized to view this project.")
             contractors = instance.contractor_set.all()
             contractor_data = {
                 contractor.specialization: {
@@ -53,13 +48,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
             bills_queryset = instance.bills_set.all()
             task_queryset = instance.tasks_set.all()
         else:
-            # Check if the current user is associated with the project as a contractor
-            if not instance.contractor_set.filter(id=request.user.id).exists():
-                raise PermissionDenied("You are not authorized to view this project.")
+            print("Inside else condition User is not authorized to view this project.")
             
-            # Retrieve bills and tasks associated with the current contractor
-            bills_queryset = instance.bills_set.filter(contractor=request.user)
-            task_queryset = instance.tasks_set.filter(contractor=request.user)
+            bills_queryset = instance.bills_set.all()
+            task_queryset = instance.tasks_set.all()
+
+        print("outside else condition User is not authorized to view this project.")
 
         # Serialize bills and tasks
         bill_data = defaultdict(list)

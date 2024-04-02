@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import SignUp from "./components/pages/SignUp";
 import SignIn from "./components/pages/SignIn";
 import AdminHome from "./components/pages/AdminHome";
@@ -95,7 +100,8 @@ const ProjectRoutes = () => {
           <Route path="/bill-page" element={<BillPage />} />
           <Route path="/profiles/:userId/edit" element={<EditProfile />} />
           <Route path="/site/:siteId/edit-site" element={<EditSite />} />
-
+          <Route path="/" element={<Navigate replace to="/admin-home" />} />
+          
           <Route path="/*" element={<Error404 />} />
         </Routes>
       </AuthProvider>

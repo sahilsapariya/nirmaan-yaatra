@@ -5,8 +5,6 @@ import Slider from "../common/Slider";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectSlice";
-import { getData } from "../../api/apis";
-import { baseurl } from "../../config";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -32,22 +30,9 @@ const Home = () => {
     }
   }, [dispatch, projects]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getData(`${baseurl}/api/profile/`);
-        localStorage.setItem("user", JSON.stringify(data));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <>
-      <Navbar addSite={true} />
+      <Navbar username={JSON.parse(localStorage.getItem("user")).name} />
 
       <ActiveSiteList sites={activeSites} />
 

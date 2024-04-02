@@ -34,7 +34,6 @@ export const getData = async (url) => {
 
 export const postData = async (url, data) => {
   try {
-    console.log(data);
     const response = await fetchData(url, "POST", data);
     return response;
   } catch (error) {

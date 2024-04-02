@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import "./../styles/Navbar.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { onContractorTape } from "../../features/global/globalSlice";
-import PopupContractorCard from "./PopupContractorCard";
+import { clearState } from "../../app/store";
+import AuthContext from "../../context/AuthContext";
 
 const Navbar = ({
+  username,
   siteId,
   billButton,
-  addSite,
   assignContractor,
   addContractor,
   specialization,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
-
-  let isSitePage = location.pathname.includes("/site/");
+  const { logoutUser } = useContext(AuthContext);
 
   const [isNavbarActive, setIsNavbarActive] = useState(false);
   const [isProfileDropdownActive, setIsProfileDropdownActive] = useState(false);
@@ -29,6 +27,9 @@ const Navbar = ({
   const handleProfileClick = () => {
     setIsProfileDropdownActive(!isProfileDropdownActive);
   };
+
+  const userType = JSON.parse(localStorage.getItem("authTokens")).userType;
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <>
@@ -40,6 +41,9 @@ const Navbar = ({
           Niramaanyatra
         </div>
         <div className="navbar__navigation">
+          {username && (
+            <p style={{ paddingRight: "10px" }}>Welcome, {username}</p>
+          )}
           {billButton && (
             <>
               <div className="navbar__button">
@@ -67,7 +71,7 @@ const Navbar = ({
             </>
           )}
 
-          {addSite && (
+          {userType === "ADMIN" && (
             <div className="navbar__button">
               <button
                 className="navbar__add_site_button"
@@ -108,13 +112,18 @@ const Navbar = ({
               className="navbar__profile_button"
               onClick={handleProfileClick}
             >
-              <AccountCircleIcon />
+              {user?.img_url ? (
+                <img
+                  src={user?.img_url}
+                  alt="profile"
+                  style={{ borderRadius: "50%", width: "2rem", height: "2rem" }}
+                />
+              ) : (
+                <AccountCircleIcon />
+              )}
             </button>
             {isProfileDropdownActive && (
               <div className="profile-dropdown">
-                <button onClick={() => dispatch(onContractorTape())}>
-                  My Profile
-                </button>
                 <button
                   onClick={() =>
                     navigate(
@@ -126,7 +135,15 @@ const Navbar = ({
                 >
                   Edit Profile
                 </button>
-                <button onClick={() => navigate("/sign-in")}>Logout</button>
+                <button
+                  onClick={() => {
+                    dispatch(clearState());
+                    logoutUser();
+                    navigate("/sign-in");
+                  }}
+                >
+                  Logout
+                </button>
               </div>
             )}
           </div>

@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { baseurl } from "../config";
+import { clearState } from "../app/store";
+import { useDispatch } from "react-redux";
 
 const AuthContext = createContext();
 
@@ -20,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   );
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let loginUser = async (e) => {
     e.preventDefault();
@@ -40,6 +43,23 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
+
+      const response2 = await fetch(`${baseurl}/api/profile/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("authTokens")).access
+          }`,
+        },
+      });
+
+      let data2 = await response2.json();
+
+      if (data2) {
+        localStorage.setItem("user", JSON.stringify(data2));
+      }
+
       navigate("/admin-home");
     } else {
       alert("Something went wrong while logging in the user!");
@@ -48,8 +68,11 @@ export const AuthProvider = ({ children }) => {
 
   let logoutUser = () => {
     localStorage.removeItem("authTokens");
+    localStorage.removeItem("user");
     setAuthTokens(null);
     setUser(null);
+    dispatch(clearState());
+    console.log("dispatched clear state");
     navigate("/sign-in");
   };
 
