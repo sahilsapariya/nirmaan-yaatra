@@ -22,7 +22,6 @@ const taskSlice = createSlice({
       state.data = action.payload;
     });
     builder.addCase(fetchTask.rejected, (state, action) => {
-      console.log("Error", action.payload);
       state.isError = true;
     });
   },

@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens(null);
     setUser(null);
     dispatch(clearState());
-    console.log("dispatched clear state");
+
     navigate("/sign-in");
   };
 

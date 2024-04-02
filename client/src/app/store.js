@@ -20,9 +20,7 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  console.log("Reducer action type:", action.type);
   if (action.type === "CLEAR_STATE") {
-    console.log("Clearing state...");
     state = undefined;
   }
   return appReducer(state, action);

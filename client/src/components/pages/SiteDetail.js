@@ -136,10 +136,18 @@ const SiteDetail = () => {
               ></div>
 
               <PendingBills
-                bills={billDetail?.filter((bill) => bill.status === "pending")}
+                bills={billDetail?.filter(
+                  (bill) =>
+                    bill.status === "pending" &&
+                    bill.category === specialization
+                )}
               />
               <ApprovedBills
-                bills={billDetail?.filter((bill) => bill.status === "approved")}
+                bills={billDetail?.filter(
+                  (bill) =>
+                    bill.status === "approved" &&
+                    bill.category === specialization
+                )}
               />
             </>
           )}
@@ -154,7 +162,7 @@ const SiteDetail = () => {
                   marginBottom: "1rem",
                 }}
               ></div>
-              <ConstructionProgress />
+              <ConstructionProgress specialization={specialization} />
             </>
           )}
         </div>
@@ -233,13 +241,17 @@ const ApprovedBills = ({ bills }) => {
   );
 };
 
-const ConstructionProgress = ({ data }) => {
+const ConstructionProgress = ({ data, specialization }) => {
   return (
     <div className="bill__container">
       <div className="sites__heading">
         <span className="heading_red_color">Construction</span> Task List
       </div>
-      {data?.length !== 0 ? <TasksTable /> : <div>"No tasks"</div>}
+      {data?.length !== 0 ? (
+        <TasksTable specialization={specialization} />
+      ) : (
+        <div>"No tasks"</div>
+      )}
     </div>
   );
 };
@@ -300,9 +312,15 @@ const BillsTable = ({ data }) => {
   );
 };
 
-const TasksTable = () => {
-  const taskDetail = useSelector((state) => state.task.data);
+const TasksTable = ({ specialization }) => {
+  var taskDetail = useSelector((state) => state.task.data);
+  taskDetail = taskDetail?.filter((task) => task.category === specialization);
+
   const dispatch = useDispatch();
+
+  if (taskDetail?.length === 0) {
+    return <div>No Tasks assigned</div>;
+  }
 
   return (
     <div className="table_wrapper">
@@ -323,32 +341,22 @@ const TasksTable = () => {
                 <td>{task?.name}</td>
                 <td>{task?.start_date}</td>
                 <td>{task?.end_date}</td>
-                {JSON.parse(localStorage.getItem("authTokens")).userType ===
-                "ADMIN" ? (
-                  <td>
-                    <select
-                      value={task?.is_complete}
-                      onChange={async (e) => {
-                        e.preventDefault();
-                        await patchData(
-                          `${baseurl}/api/v1/tasks/${task?.id}/`,
-                          {
-                            is_complete: e.target.value,
-                          }
-                        );
+                <td>
+                  <select
+                    value={task?.is_complete}
+                    onChange={async (e) => {
+                      e.preventDefault();
+                      await patchData(`${baseurl}/api/v1/tasks/${task?.id}/`, {
+                        is_complete: e.target.value,
+                      });
 
-                        dispatch(fetchTask());
-                      }}
-                    >
-                      <option value={"true"}>Completed</option>
-                      <option value={"false"}>Pending</option>
-                    </select>
-                  </td>
-                ) : (
-                  <td>
-                    {task?.is_complete === "true" ? "Completed" : "Pending"}
-                  </td>
-                )}
+                      dispatch(fetchTask());
+                    }}
+                  >
+                    <option value={"true"}>Completed</option>
+                    <option value={"false"}>Pending</option>
+                  </select>
+                </td>
               </tr>
             );
           })}

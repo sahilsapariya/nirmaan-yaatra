@@ -22,7 +22,6 @@ const billSlice = createSlice({
       state.data = action.payload;
     });
     builder.addCase(fetchBill.rejected, (state, action) => {
-      console.log("Error", action.payload);
       state.isError = true;
     });
   },

@@ -62,7 +62,6 @@ const AddSite = () => {
       else formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
 
-    console.log(formDataKeyValueForAPI);
     const response = await postData(
       `${baseurl}/api/v1/projects/`,
       formDataKeyValueForAPI

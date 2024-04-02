@@ -72,8 +72,7 @@ const EditProfile = () => {
     Object.entries(formData).forEach(([fieldName, fieldData]) => {
       formDataKeyValueForAPI[fieldName] = fieldData.value;
     });
-    console.log(formDataKeyValueForAPI);
-    console.log(JSON.parse(localStorage.getItem("user")).id);
+
     const response = await patchData(
       `${baseurl}/api/v1/contractors/${
         JSON.parse(localStorage.getItem("user")).id
