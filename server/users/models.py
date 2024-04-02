@@ -9,7 +9,7 @@ class Contractor(AbstractUser):
     address = models.TextField(blank=True)
     specialization = models.CharField(max_length=100, blank=True)
     projects = models.ManyToManyField(Project, blank=True)
-    img_url = models.URLField(blank=True)
+    img_url = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.username}"
