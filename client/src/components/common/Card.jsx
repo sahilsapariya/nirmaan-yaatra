@@ -54,6 +54,7 @@ export const ContractorCard = ({ data }) => {
       <div className="card__button">
         <button
           onClick={() => {
+            localStorage.setItem("site", JSON.stringify(data));
             dispatch(fetchSite(`${baseurl}/api/v1/projects/${data.id}/`));
             navigate(`/site/${data.id}/site-detail/${specialization}`);
           }}
@@ -91,34 +92,5 @@ export const SiteDetailCard = ({ data }) => {
     </div>
   );
 };
-
-// export const BillTable = ({ bill }) => {
-//   return (
-//     <table className="bill-table">
-//       <thead>
-//         <tr>
-//           <th>Name</th>
-//           <th>Dealer</th>
-//           <th>Bill Amount</th>
-//           <th>Bill Date</th>
-//           <th>Description</th>
-//           <th>Bill Doc</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         <tr>
-//           <td>{bill.name}</td>
-//           <td>{bill.dealer}</td>
-//           <td>{bill.billAmount}</td>
-//           <td>{bill.billDate}</td>
-//           <td>{bill.description}</td>
-//           <td>
-//             <button className="download-button">Download</button>
-//           </td>
-//         </tr>
-//       </tbody>
-//     </table>
-//   );
-// };
 
 export default AdminCard;

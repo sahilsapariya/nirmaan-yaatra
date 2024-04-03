@@ -27,19 +27,31 @@ const SiteDetail = () => {
   var billDetail = useSelector((state) => state.bill.data);
   var taskDetail = useSelector((state) => state.task.data);
 
+  var bills = billDetail?.filter((bill) => bill.category === specialization);
+  var tasks = taskDetail?.filter((task) => task.category === specialization);
+
+  var totalPendingBills = bills?.filter(
+    (bill) => bill.status === "pending"
+  ).length;
+  var totalAprovedBills = bills?.filter(
+    (bill) => bill.status === "approved"
+  ).length;
+  var totalCompletedTasks = tasks?.filter(
+    (task) => task.is_complete === true
+  ).length;
+  var totalPendingTasks = tasks?.filter(
+    (task) => task.is_complete === false
+  ).length;
+
   var siteDetail = site?.site_details;
 
   useEffect(() => {
-    if (!site) {
+    if (JSON.parse(localStorage.getItem("authTokens")).userType === "ADMIN") {
       dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
     }
-    if (!billDetail) {
-      dispatch(fetchBill());
-    }
-    if (!taskDetail) {
-      dispatch(fetchTask());
-    }
-  }, [dispatch, site, siteId, billDetail, taskDetail]);
+    dispatch(fetchBill(`${baseurl}/api/v1/projects/${siteId}/bills/`));
+    dispatch(fetchTask(`${baseurl}/api/v1/projects/${siteId}/tasks/`));
+  }, [dispatch, siteId]);
 
   siteDetail = siteDetail?.filter(
     (category) => category.category === specialization
@@ -94,20 +106,37 @@ const SiteDetail = () => {
             {/* <Slider data={contractors} type={"contractors"} /> */}
             {siteDetail && <ContractorCard data={siteDetail.contractor} />}
 
-            <PieChart
-              labels={["1", "2"]}
-              datasets={[
-                {
-                  data: [60, 40],
-                  backgroundColor: ["#FF6384", "#36A2EB"],
-                },
-              ]}
-            />
+            <div className="site_detail_pie_chart">
+              <PieChart
+                labels={[
+                  "Pending Tasks",
+                  "Completed Tasks",
+                  "Pending Bills",
+                  "Approved Bills",
+                ]}
+                datasets={[
+                  {
+                    data: [
+                      totalPendingTasks,
+                      totalCompletedTasks,
+                      totalPendingBills,
+                      totalAprovedBills,
+                    ],
+                    backgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56",
+                      "#FF2510",
+                    ],
+                  },
+                ]}
+              />
+            </div>
           </div>
         ) : (
           <div className="contractor_upper__container">
-            <h1>{site?.project_name}</h1>
-            <p>{site?.location}</p>
+            <h1>{JSON.parse(localStorage.getItem("site"))?.project_name}</h1>
+            <p>{JSON.parse(localStorage.getItem("site"))?.location}</p>
           </div>
         )}
         <div className="lower__container">
@@ -153,6 +182,7 @@ const SiteDetail = () => {
                     bill.status === "pending" &&
                     bill.category === specialization
                 )}
+                siteId={siteId}
               />
               <ApprovedBills
                 bills={billDetail?.filter(
@@ -160,6 +190,7 @@ const SiteDetail = () => {
                     bill.status === "approved" &&
                     bill.category === specialization
                 )}
+                siteId={siteId}
               />
             </>
           )}
@@ -174,7 +205,10 @@ const SiteDetail = () => {
                   marginBottom: "1rem",
                 }}
               ></div>
-              <ConstructionProgress specialization={specialization} />
+              <ConstructionProgress
+                specialization={specialization}
+                siteId={siteId}
+              />
             </>
           )}
         </div>
@@ -218,14 +252,14 @@ export const ContractorCard = ({ data }) => {
   );
 };
 
-const PendingBills = ({ bills }) => {
+const PendingBills = ({ bills, siteId }) => {
   return (
     <div className="bill__container">
       <div className="sites__heading">
         <span className="heading_red_color">Pending</span> Bills
       </div>
       {bills?.length !== 0 ? (
-        <BillsTable data={bills} />
+        <BillsTable data={bills} siteId={siteId} />
       ) : (
         <div>"No pending bills"</div>
       )}
@@ -233,7 +267,7 @@ const PendingBills = ({ bills }) => {
   );
 };
 
-const ApprovedBills = ({ bills }) => {
+const ApprovedBills = ({ bills, siteId }) => {
   return (
     <div className="bill__container">
       <div className="sites__heading">
@@ -243,7 +277,7 @@ const ApprovedBills = ({ bills }) => {
         Bills
       </div>
       {bills?.length !== 0 ? (
-        <BillsTable data={bills} />
+        <BillsTable data={bills} siteId={siteId} />
       ) : (
         <div>"No approved bills"</div>
       )}
@@ -251,14 +285,14 @@ const ApprovedBills = ({ bills }) => {
   );
 };
 
-const ConstructionProgress = ({ data, specialization }) => {
+const ConstructionProgress = ({ data, specialization, siteId }) => {
   return (
     <div className="bill__container">
       <div className="sites__heading">
         <span className="heading_red_color">Construction</span> Task List
       </div>
       {data?.length !== 0 ? (
-        <TasksTable specialization={specialization} />
+        <TasksTable specialization={specialization} siteId={siteId} />
       ) : (
         <div>"No tasks"</div>
       )}
@@ -266,7 +300,7 @@ const ConstructionProgress = ({ data, specialization }) => {
   );
 };
 
-const BillsTable = ({ data }) => {
+const BillsTable = ({ data, siteId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
@@ -297,13 +331,17 @@ const BillsTable = ({ data }) => {
                       onChange={async (e) => {
                         e.preventDefault();
                         await patchData(
-                          `${baseurl}/api/v1/bills/${bill?.id}/`,
+                          `${baseurl}/api/v1/projects/${siteId}/bills/${bill?.id}/`,
                           {
                             status: e.target.value,
                           }
                         );
 
-                        dispatch(fetchBill());
+                        dispatch(
+                          fetchBill(
+                            `${baseurl}/api/v1/projects/${siteId}/bills/`
+                          )
+                        );
                       }}
                     >
                       <option value={"pending"}>pending</option>
@@ -338,7 +376,7 @@ const BillsTable = ({ data }) => {
   );
 };
 
-const TasksTable = ({ specialization }) => {
+const TasksTable = ({ specialization, siteId }) => {
   var taskDetail = useSelector((state) => state.task.data);
   taskDetail = taskDetail?.filter((task) => task.category === specialization);
 
@@ -374,11 +412,16 @@ const TasksTable = ({ specialization }) => {
                     value={task?.is_complete}
                     onChange={async (e) => {
                       e.preventDefault();
-                      await patchData(`${baseurl}/api/v1/tasks/${task?.id}/`, {
-                        is_complete: e.target.value,
-                      });
+                      await patchData(
+                        `${baseurl}/api/v1/projects/${siteId}/tasks/${task?.id}/`,
+                        {
+                          is_complete: e.target.value,
+                        }
+                      );
 
-                      dispatch(fetchTask());
+                      dispatch(
+                        fetchTask(`${baseurl}/api/v1/projects/${siteId}/tasks/`)
+                      );
                     }}
                   >
                     <option value={"true"}>Completed</option>

@@ -23,7 +23,7 @@
   font-style: normal;
   letter-spacing: 0.005rem;
   margin: auto 0;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   cursor: pointer;
 }
 
@@ -141,5 +141,8 @@
     color: black;
     border: none;
     outline: none;
+  }
+  #welcome-username {
+    display: none;
   }
 }

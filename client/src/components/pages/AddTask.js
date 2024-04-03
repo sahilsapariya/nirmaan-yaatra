@@ -40,7 +40,7 @@ const AddTask = () => {
 
     await postData(`${baseurl}/api/v1/tasks/`, formDataKeyValueForAPI);
 
-    dispatch(fetchTask());
+    dispatch(fetchTask(`${baseurl}/api/v1/projects/${siteId}/tasks/`));
     navigate(`/site/${siteId}/site-detail/${specialization}`);
     Object.values(formData).forEach((data) => {
       data.value = null;

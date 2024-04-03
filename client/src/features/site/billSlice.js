@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "../../api/apis";
 import { baseurl } from "../../config";
 
-export const fetchBill = createAsyncThunk("fetchBill", async () => {
-  return await getData(`${baseurl}/api/v1/bills/`);
+export const fetchBill = createAsyncThunk("fetchBill", async (url) => {
+  return await getData(url);
 });
 
 const billSlice = createSlice({

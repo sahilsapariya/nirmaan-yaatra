@@ -21,6 +21,14 @@ const Site = () => {
 
   let site = state.data;
 
+  var budget = site?.budget;
+
+  var totalBillAmount = site?.site_details
+    ?.map((category) =>
+      category.bills.map((bill) => bill.amount).reduce((a, b) => a + b, 0)
+    )
+    .reduce((a, b) => a + b, 0);
+
   useEffect(() => {
     dispatch(fetchSite(`${baseurl}/api/v1/projects/${siteId}/`));
   }, [dispatch, siteId]);
@@ -31,16 +39,17 @@ const Site = () => {
       <div className="site__container">
         <div className="upper__container">
           <SiteCard data={site} />
-
-          <PieChart
-            labels={["1", "2"]}
-            datasets={[
-              {
-                data: [60, 40],
-                backgroundColor: ["#FF6384", "#36A2EB"],
-              },
-            ]}
-          />
+          <div className="site_detail_pie_chart">
+            <PieChart
+              labels={["Budget", "Spent"]}
+              datasets={[
+                {
+                  data: [budget, totalBillAmount],
+                  backgroundColor: ["#FF6384", "#36A2EB"],
+                },
+              ]}
+            />
+          </div>
         </div>
         <div className="lower__container">
           <SiteDetails fields={fields} />
@@ -84,10 +93,7 @@ const SiteCard = ({ data }) => {
           {JSON.parse(localStorage.getItem("authTokens")).userType ===
             "ADMIN" && (
             <>
-              <button
-                onClick={() => navigate(`/site/${siteId}/edit-site`)}
-                style={{ marginLeft: "1rem" }}
-              >
+              <button onClick={() => navigate(`/site/${siteId}/edit-site`)}>
                 Edit Site Details
               </button>
               <button
@@ -98,7 +104,7 @@ const SiteCard = ({ data }) => {
 
                   navigate(`/home`);
                 }}
-                style={{ marginLeft: "1rem", background: "red" }}
+                style={{ background: "red" }}
               >
                 Delete Site
               </button>

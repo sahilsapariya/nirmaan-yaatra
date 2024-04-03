@@ -54,10 +54,12 @@ const AddBill = () => {
     });
 
     formDataKeyValueForAPI["category"] = specialization;
+    formDataKeyValueForAPI["projects"] = siteId;
+
 
     await postData(`${baseurl}/api/v1/bills/`, formDataKeyValueForAPI);
 
-    dispatch(fetchBill());
+    dispatch(fetchBill(`${baseurl}/api/v1/projects/${siteId}/bills/`));
     navigate(`/site/${siteId}/site-detail/${specialization}`);
     Object.values(formData).forEach((data) => {
       data.value = null;

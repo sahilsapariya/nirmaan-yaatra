@@ -30,7 +30,8 @@ button {
 
 @media screen and (min-width: 768px) {
   .pie_chart {
-    width: 40% !important;
+    width: 100% !important;
+    max-height: 425px;
   }
   .pie_chart canvas {
     max-height: unset;

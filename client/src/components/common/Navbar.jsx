@@ -38,7 +38,7 @@ const Navbar = ({
         </div>
         <div className="navbar__navigation">
           {username && !isNavbarActive && (
-            <p style={{ paddingRight: "10px" }}>Welcome, {username}</p>
+            <p style={{ paddingRight: "10px" }} id="welcome-username">Welcome, {username}</p>
           )}
           {billButton && (
             <>

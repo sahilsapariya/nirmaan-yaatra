@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "../../api/apis";
 import { baseurl } from "../../config";
 
-export const fetchTask = createAsyncThunk("fetchTask", async () => {
-  return await getData(`${baseurl}/api/v1/tasks/`);
+export const fetchTask = createAsyncThunk("fetchTask", async (url) => {
+  return await getData(url);
 });
 
 const taskSlice = createSlice({

@@ -24,7 +24,7 @@ const PieChart = ({ labels, datasets }) => {
         chartInstance.current.destroy();
       }
     };
-  }, []);
+  }, [datasets]);
   return (
     <div className="pie_chart">
       <canvas ref={chartRef} width={50} height={50}></canvas>

@@ -3,11 +3,15 @@ from rest_framework.response import Response
 from .models import Project
 from .serializers import ProjectSerializer
 from collections import defaultdict
+from bills.models import Bills
+from tasks.models import Tasks
+from users.permissions import IsAdminOrContractor
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = [IsAdminOrContractor]
 
 
     def list(self, request, *args, **kwargs):
@@ -24,13 +28,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
     
 
     def retrieve(self, request, *args, **kwargs):
-        print("Inside retrieve method")
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         contractor_data = {}
 
         if request.user.is_superuser:
-            print("inside superuser if condition User is authorized to view this project.")
             contractors = instance.contractor_set.all()
             contractor_data = {
                 contractor.specialization: {
@@ -45,15 +47,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
                 } for contractor in contractors
             }
 
-            bills_queryset = instance.bills_set.all()
-            task_queryset = instance.tasks_set.all()
+            bills_queryset = Bills.objects.filter(projects=instance)
+            task_queryset = Tasks.objects.filter(project=instance)
         else:
-            print("Inside else condition User is not authorized to view this project.")
             
             bills_queryset = instance.bills_set.all()
             task_queryset = instance.tasks_set.all()
 
-        print("outside else condition User is not authorized to view this project.")
 
         # Serialize bills and tasks
         bill_data = defaultdict(list)

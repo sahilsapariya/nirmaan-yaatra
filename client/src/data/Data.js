@@ -3,7 +3,7 @@
 export const fields = [
   {
     "title": "Water Contractor",
-    "img_url": "https://www.kpstructures.in/wp-content/uploads/2020/10/Breakwater-Stormy-Water-Spray-Sea-Wave-Windy-379252-edited.jpg",
+    "img_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMIuOWVwycm7MptVi_XCJTgdXf1D2Qsr1ppglMkKyeIQ&s",
     "slug": "water"
   },
   {
