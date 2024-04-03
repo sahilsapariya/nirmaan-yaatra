@@ -1,4 +1,4 @@
 const devurl = "http://127.0.0.1:8000"
-const produrl = "https://api.example.com"
+const produrl = "https://nirmaanyaatra.pythonanywhere.com/"
 
-export const baseurl = devurl
+export const baseurl = produrl
