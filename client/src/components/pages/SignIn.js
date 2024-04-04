@@ -26,14 +26,14 @@ function SignIn() {
                   type="text"
                   name="username"
                   className="signup__container_input_field"
-                  placeholder="Username"
+                  placeholder="admin"
                   required
                 />
                 <input
                   type="password"
                   name="password"
                   className="signup__container_input_field"
-                  placeholder="Password"
+                  placeholder="admin@123"
                   required
                 />
                 <button className="button_property" type="submit">

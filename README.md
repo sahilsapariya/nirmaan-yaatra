@@ -1,4 +1,4 @@
-# NIRMAANYATRA 🚧🏗️
+# NIRMAAN YATRA 🚧🏗️
 
 ![Project Image](https://github.com/bhuvisanathra/nirmaan-yaatra/assets/68009290/56bd0a33-72d2-45b2-a730-b92bf52814b8)
 
@@ -81,12 +81,18 @@ pip install -r requirements.txt
 3. Start the backend server:
 
 ```bash
-python ./manage.py runserver
+python manage.py runserver
 ```
 
 This will start the Django development server. You can access it at http://localhost:8000 in your web browser.
 
 ## 🌐 Live Demo
+
+#### Credentials
+
+__Username: admin__
+
+__Password: admin@123__
 
 Check out the live demo of NIRMAANYATRA at https://nirmaanyaatra.netlify.app. 🚀
 
