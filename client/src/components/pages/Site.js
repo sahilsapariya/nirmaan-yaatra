@@ -25,7 +25,9 @@ const Site = () => {
 
   var totalBillAmount = site?.site_details
     ?.map((category) =>
-      category.bills.map((bill) => bill.amount).reduce((a, b) => a + b, 0)
+      category.bills
+        .map((bill) => bill.status === "approved" && bill.amount)
+        .reduce((a, b) => a + b, 0)
     )
     .reduce((a, b) => a + b, 0);
 

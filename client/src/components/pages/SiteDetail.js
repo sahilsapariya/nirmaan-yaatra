@@ -42,6 +42,9 @@ const SiteDetail = () => {
   var totalPendingTasks = tasks?.filter(
     (task) => task.is_complete === false
   ).length;
+  var totalRejectedBills = bills?.filter(
+    (bill) => bill.status === "reject"
+  ).length
 
   var siteDetail = site?.site_details;
 
@@ -113,6 +116,7 @@ const SiteDetail = () => {
                   "Completed Tasks",
                   "Pending Bills",
                   "Approved Bills",
+                  "Rejected Bills"
                 ]}
                 datasets={[
                   {
@@ -121,12 +125,14 @@ const SiteDetail = () => {
                       totalCompletedTasks,
                       totalPendingBills,
                       totalAprovedBills,
+                      totalRejectedBills
                     ],
                     backgroundColor: [
                       "#FF6384",
                       "#36A2EB",
-                      "#FFCE56",
-                      "#FF2510",
+                      "#9B870C",
+                      "green",
+                      "red",
                     ],
                   },
                 ]}
@@ -179,7 +185,7 @@ const SiteDetail = () => {
               <PendingBills
                 bills={billDetail?.filter(
                   (bill) =>
-                    bill.status === "pending" &&
+                    (bill.status === "pending" || bill.status === "reject") &&
                     bill.category === specialization
                 )}
                 siteId={siteId}
@@ -346,25 +352,26 @@ const BillsTable = ({ data, siteId }) => {
                     >
                       <option value={"pending"}>pending</option>
                       <option value={"approved"}>approved</option>
-                      <option value={"paid"}>paid</option>
+                      <option value={"reject"}>reject</option>
                     </select>
                   </td>
                 ) : (
                   <td
                     style={{
                       textAlign: "center",
+                      color:
+                        bill?.status === "pending"
+                          ? "#9B870C"
+                          : bill?.status === "reject"
+                          ? "red"
+                          : "green",
                     }}
                   >
-                    <button
-                      style={{
-                        padding: "2px 1rem",
-                      }}
-                      onClick={() => {
-                        navigate(`/bill-page`);
-                      }}
-                    >
-                      View details
-                    </button>
+                    {bill?.status === "pending"
+                      ? "Pending"
+                      : bill?.status === "reject"
+                      ? "Rejected"
+                      : "Approved"}
                   </td>
                 )}
               </tr>
