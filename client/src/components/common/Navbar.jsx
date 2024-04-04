@@ -34,7 +34,7 @@ const Navbar = ({
     <>
       <div className="navbar__Heading">
         <div className="navbar__logo_Name" onClick={() => navigate("/home")}>
-          Niramaanyatra
+          NiramaanYatra
         </div>
         <div className="navbar__navigation">
           {username && !isNavbarActive && (
